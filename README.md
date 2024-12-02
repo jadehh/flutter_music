@@ -1,16 +1,39 @@
-# flutter_music
+# Flutter Music
 
-A new Flutter project.
+## 说明
+一个基于Flutter的听歌软件
+支持平台
+* Windows,Linux,Mac OS,Android,IOS
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## 功能
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [x] 主题设置
+- [x] 语言设置
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## 更新日志
+
+[更新日志](./CHANGELOG.md)
+
+## 开发环境
+
+```
+[√] Flutter (Channel stable, 3.19.4, on Microsoft Windows [版本 10.0.19045.3448], locale zh-CN)
+[√] Windows Version (Installed version of Windows is version 10 or higher)
+[√] Android toolchain - develop for Android devices (Android SDK version 34.0.0)
+[√] Visual Studio - develop Windows apps (Visual Studio 生成工具 2022 17.7.5)
+[√] Android Studio (version 2023.2)
+[√] VS Code, 64-bit edition (version 1.87.2)
+```
+
+## 声明
+
+此项目（Flutter Music）是个人为了兴趣而开发, 仅用于学习和测试。 所用API皆从官方网站收集, 不提供任何破解内容。
+
+## 致谢
+
+- [lx-music](https://github.com/lyswhut/lx-music-mobile)
+- 等等
