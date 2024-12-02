@@ -1,4 +1,6 @@
 flutter/ephemeral/
+flutter/generated_plugins.cmake
+flutter/generated_plugin_registrant.cc
 
 # Visual Studio user-specific files.
 *.suo
@@ -15,3 +17,4 @@ x86/
 *.[Cc]ache
 # but keep track of directories ending in .cache
 !*.[Cc]ache/
+
