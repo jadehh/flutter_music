@@ -18,6 +18,13 @@ class SettingService extends GetxService {
   // 语言
   Rx<Locale> locale = defaultLangLocale.obs;
 
+  // 字体大小
+  final fontSize = defaultFontSize.obs;
+
+  static double get defaultFontSize {
+    return Setting.getFontSize();
+  }
+
   static Locale get defaultLangLocale {
     switch (Setting.getLanguage()) {
       case 0:
@@ -88,5 +95,9 @@ class SettingService extends GetxService {
     themeScheme.value = defaultThemeScheme;
   }
 
+  setFontSize(double _fontSize) async {
+    fontSize.value = _fontSize;
+    await Setting.setFontSize(_fontSize);
+  }
 
 }

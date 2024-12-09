@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_music/app/base/views/divider_view.dart';
+import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/routes/route_path.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,7 @@ class SettingView extends StatelessWidget{
           return SizedBox.shrink();
         }else{
           return InkWell(child: ListTile(
-            title: Text(items[index-1].title),
+            title: TextView(items[index-1].title),
             trailing: Icon(Icons.chevron_right),
           ),onTap: (){
             Get.toNamed(items[index-1].pageString!);

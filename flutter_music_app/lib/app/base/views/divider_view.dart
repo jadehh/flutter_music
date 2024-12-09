@@ -7,6 +7,7 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_music/app/base/views/text_view.dart';
 
 class DividerView extends StatelessWidget{
   final String text;
@@ -19,9 +20,8 @@ class DividerView extends StatelessWidget{
       color: Colors.grey.withOpacity(0.1),
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.all(8),
-      child: Text(
+      child: TextView(
         text,
-        style: TextStyle(fontSize: 12),
       ),
     );
   }

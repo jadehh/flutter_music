@@ -6,7 +6,6 @@
  * @Software : Samples
  * @Desc     :
  */
-import 'dart:io';
 
 import 'package:flutter/material.dart' ;
 import 'package:flutter_music/app/base/views/text_view.dart';
@@ -44,39 +43,37 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
         width: 200.w,
         height: 400.h,
         color: Colors.white,
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Column(
+        child:Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-          Container(
-          child: Align(
-          alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {
+              Container(
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () {
 
-                },
-                icon: const Icon(Icons.close),
-              )),
-        ),
-        TextView(S.of(context).user_api_title),
-        Expanded(child: widget.apiItems.isEmpty ? Center(child: TextView(S.of(context).user_api_empty)):ListView(children:
-        List.generate(widget.apiItems.length, (i) {
-          return _sourceWidget(widget.apiItems[i]);
-        }))),
-        Padding(padding: const EdgeInsets.fromLTRB(20,5,20,5),child: Row(
-            children: [
-              TextView(S.of(context).user_api_readme),
-              //     Link(
-              //       // from the url_launcher package
-              //       uri: Uri.parse('https://lxmusic.toside.cn/mobile/custom-source'),
-              //       builder: (context, open) {
-              //         return HyperlinkButton(
-              //           onPressed: open,
-              //           child: const Text('FAQ', style:TextStyle(decoration: TextDecoration.underline)),
-              //         );
-              //       },
-              //     ),
+                      },
+                      icon: const Icon(Icons.close),
+                    )),
+              ),
+              TextView(S.of(context).user_api_title),
+              Expanded(child: widget.apiItems.isEmpty ? Center(child: TextView(S.of(context).user_api_empty)):ListView(children:
+              List.generate(widget.apiItems.length, (i) {
+                return _sourceWidget(widget.apiItems[i]);
+              }))),
+              Padding(padding: const EdgeInsets.fromLTRB(20,5,20,5),child: Row(
+                children: [
+                  TextView(S.of(context).user_api_readme),
+                  //     Link(
+                  //       // from the url_launcher package
+                  //       uri: Uri.parse('https://lxmusic.toside.cn/mobile/custom-source'),
+                  //       builder: (context, open) {
+                  //         return HyperlinkButton(
+                  //           onPressed: open,
+                  //           child: const Text('FAQ', style:TextStyle(decoration: TextDecoration.underline)),
+                  //         );
+                  //       },
+                  //     ),
                 ],
               ),),
               Padding(padding: const EdgeInsets.fromLTRB(20,5,20,5),child:Align(alignment: Alignment.centerLeft,child: TextView(S.of(context).user_api_note),),),
@@ -88,9 +85,9 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
                   Expanded(child: _dropdownButton()),
                 ],),),
             ]
-          )
+        )
         ),
-      ));
+      );
   }
 
   showSelectSourceView(){

@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music_core/main.dart';
 import 'package:get/get.dart';
 class ThemeItem{
@@ -27,12 +28,12 @@ class ThemeButtonView extends StatelessWidget{
     final color = AppTheme.getThemeColor(themeItem.scheme);
     // TODO: implement build
     return Padding(padding: EdgeInsets.all(5),child: SizedBox(
-      width: 80,
+      width: 100,
       child: Obx(()=>InkWell(child: Column(
         children: [
           Center(child: Container(
-            width: 60,
-            height: 60,
+            width: 80,
+            height: 80,
             decoration: settingService.themeScheme.value == themeItem.scheme ?  BoxDecoration(
                 border: Border.all(
                   color: color , // 设置边框颜色为蓝色
@@ -41,14 +42,14 @@ class ThemeButtonView extends StatelessWidget{
             alignment: Alignment.center,
             // where to position the child
             child: Container(
-              width: 40,
-              height: 40,
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
                 color: color,
               ),
             ),
           ),),
-          Text(themeItem.title, style: TextStyle(color: color),),
+          TextView(themeItem.title, color: color,),
         ],
       ), onTap: () async{
         settingService.setThemeScheme(themeItem.index);

@@ -19,6 +19,8 @@ sealed class AppTheme {
   static  VisualDensity visualDensity = FlexColorScheme.comfortablePlatformDensity;
   static const cupertinoOverrideTheme =  CupertinoThemeData(applyThemeToAll: true);
 
+
+
   static  FlexScheme defaultScheme = theme_green;
 
   static get theme_green{
@@ -67,23 +69,9 @@ sealed class AppTheme {
     return FlexScheme.hippieBlue;
   }
 
-  // The defined light theme.
-  static ThemeData light =   FlexThemeData.light(
-    scheme: defaultScheme,
-    subThemesData: subThemesData,
-    visualDensity: visualDensity,
-    cupertinoOverrideTheme: cupertinoOverrideTheme,
-  );
-  // The defined dark theme.
-  static ThemeData dark = FlexThemeData.dark(
-    scheme: defaultScheme,
-    subThemesData: subThemesData,
-    visualDensity: visualDensity,
-    cupertinoOverrideTheme: cupertinoOverrideTheme,
-  );
 
 
-  static ThemeData changeLightTheme(FlexScheme scheme) {
+  static ThemeData changeLightTheme(FlexScheme scheme ) {
     return FlexThemeData.light(
       scheme: scheme,
       subThemesData: subThemesData,
@@ -108,5 +96,4 @@ sealed class AppTheme {
   static Color getThemeColor(FlexScheme scheme){
     return AppTheme.changeLightTheme(scheme).primaryColor;
   }
-
 }

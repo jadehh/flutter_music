@@ -79,7 +79,10 @@ class SettingBasicController extends GetxController {
   }
 
   setFontSize(double value) async{
-    fontSize.value = value.toInt().toDouble();
-    await Setting.setFontSize(fontSize.value);
+    double _fontSize = value.toInt().toDouble();
+    if(fontSize.value != _fontSize){
+      fontSize.value = _fontSize;
+      await settingService.setFontSize(_fontSize);
+    }
   }
 }

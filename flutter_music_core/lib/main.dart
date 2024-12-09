@@ -2,7 +2,6 @@ library flutter_music_core;
 
 import 'dart:io';
 
-import 'package:flutter_music_core/app/controllers/app_settings_controller.dart';
 import 'package:flutter_music_core/common/log.dart';
 import 'package:flutter_music_core/model/setting.dart';
 import 'package:flutter_music_core/service/setting_service.dart';

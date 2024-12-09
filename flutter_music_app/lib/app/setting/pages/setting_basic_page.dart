@@ -8,12 +8,15 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_music/app/base/views/divider_view.dart';
+import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/base/views/theme_button_view.dart';
+import 'package:flutter_music/app/dialog/setting_source_dialog.dart';
 import 'package:flutter_music/app/setting/controller/setting_basic_controller.dart';
 import 'package:flutter_music/app/setting/views/setting_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/app/constant.dart';
 import 'package:flutter_music_core/main.dart';
+import 'package:flutter_music_core/model/user_api_info.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:get/get.dart';
@@ -68,6 +71,10 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           title: S.of(context).setting_basic_font_size,
           subTitle: S.of(context).setting_basic_font_size,
           index: 10),
+      SettingItem(
+          title: S.of(context).user_api_title,
+          subTitle: S.of(context).setting_basic_source,
+          index: 11),
     ];
     // TODO: implement build
     return Scaffold(
@@ -82,9 +89,11 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             return _buildLanView(context, controller);
           } else if (index == 11) {
             return _buildFontView(context, controller);
-          } else {
+          } else if (index == 12){
+            return _buildSourceView(context,controller,items[index-1].title);
+          }else {
             return ListTile(
-                title: Text(items[index - 1].title),
+                title: TextView(items[index - 1].title),
                 trailing: Obx(() => Switch(
                     value: controller.settingState[index - 1],
                     onChanged: (value) {
@@ -152,7 +161,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
     ];
     return Obx(() => Column(children: [
           RadioListTile<int>(
-            title: Text(S.of(context).setting_basic_theme_follow_system),
+            title: TextView(S.of(context).setting_basic_theme_follow_system),
             value: 0,
             groupValue: controller.themeMode.value,
             onChanged: (int? value) {
@@ -161,7 +170,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           ),
           Divider(),
           RadioListTile<int>(
-            title: Text(S.of(context).setting_basic_theme_light),
+            title: TextView(S.of(context).setting_basic_theme_light),
             value: 1,
             groupValue: controller.themeMode.value,
             onChanged: (int? value) {
@@ -170,7 +179,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           ),
           Divider(),
           RadioListTile<int>(
-            title: Text(S.of(context).setting_basic_theme_dark),
+            title: TextView(S.of(context).setting_basic_theme_dark),
             value: 2,
             groupValue: controller.themeMode.value,
             onChanged: (int? value) {
@@ -195,21 +204,21 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             onChanged: (value) {
               controller.changeLanguage(0);
             },
-            title: Text(S.of(context).setting_basic_lang_system))),
+            title: TextView(S.of(context).setting_basic_lang_system))),
         Obx(() => CheckboxListTile(
             controlAffinity: ListTileControlAffinity.leading,
             value: controller.lang.value == 1,
             onChanged: (value) {
               controller.changeLanguage(1);
             },
-            title: Text("简体中文"))),
+            title: TextView("简体中文"))),
         Obx(() => CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: controller.lang.value == 2,
               onChanged: (value) {
                 controller.changeLanguage(2);
               },
-              title: Text("English"),
+              title: TextView("English"),
             )),
       ],
     );
@@ -218,10 +227,6 @@ class SettingBasicPage extends GetView<SettingBasicController> {
   _buildFontView(BuildContext context, SettingBasicController controller) {
     return Padding(padding: EdgeInsets.fromLTRB(20, 0, 20, 0),child: Row(
       children: [
-        Text(
-          'google',
-          style: TextStyle(fontFamily: 'hammersmithOne') // This is loaded from assets
-    ),
         Text(S.of(context).setting_basic_font_size_80,style: TextStyle(
           fontSize: Constant.settingBasicFontSize80,
         ),),
@@ -246,4 +251,68 @@ class SettingBasicPage extends GetView<SettingBasicController> {
     ),
     );
   }
+
+  _buildSourceView(BuildContext context,SettingBasicController controller,String title){
+    return ListTile(title:TextView(title), trailing: Icon(Icons.chevron_right), onTap: (){
+      Get.dialog(
+        AlertDialog(
+          title: Align(alignment:Alignment.center,child:TextView(S.of(context).user_api_title),),
+          content: Container(
+            child:  [].isEmpty ? Center(child: TextView(S.of(context).user_api_empty)):ListView(children:
+            List.generate([].length, (i) {
+              return _sourceWidget([][i]);
+            })),
+          ),
+          actions: [
+            TextButton(
+              child: const TextView("Close"),
+              onPressed: () => Get.back(),
+            ),
+            TextButton(
+              child: const TextView("confirm"),
+              onPressed: () => Get.back(),
+            ),
+          ],
+        ),
+      );
+    },);
+  }
+  Widget _sourceWidget(UserApiInfo info){
+    return Padding(padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),child:
+    Row(
+      children: [
+        Expanded(child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(info.name!),
+                const SizedBox(width: 10,),
+                Text(info.version!,style: TextStyle(
+                  color: Colors.grey.withOpacity(0.5),
+                ),),
+                const SizedBox(width: 10,),
+                Text(info.author!,style: TextStyle(
+                  color: Colors.grey.withOpacity(0.5),
+                )),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Text(info.description!,style:TextStyle(
+              color: Colors.grey.withOpacity(0.5),
+            )),
+            const SizedBox(height: 5,),
+            Checkbox(value: info.allowShowUpdateAlert, onChanged: (value){
+
+            })
+          ],
+        )),
+        IconButton(icon: const Icon(Icons.close),onPressed: (){
+        },),
+      ],
+    )
+    );
+  }
+
 }
