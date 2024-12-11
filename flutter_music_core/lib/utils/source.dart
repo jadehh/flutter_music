@@ -61,7 +61,8 @@ class SourceUtil{
     if (userApiInfo.selected) {
       userApiInfo.initStatus.value = 0;
       var spider = Spider();
-      spider.init(userApiInfo.id,userApiInfo.name,userApiInfo.description,userApiInfo.version,userApiInfo.author,userApiInfo.homepage,userApiInfo.script);
+      await spider.init(userApiInfo.id,userApiInfo.name,userApiInfo.description,userApiInfo.version,userApiInfo.author,userApiInfo.homepage,userApiInfo.script);
+      userApiInfo.initStatus.value = 3;
     }
   }
   static removeInitJs(UserApiInfo userApiInfo) async{

@@ -23,16 +23,22 @@ class Spider {
   }
 
   Future<bool> createJSEnv(String id, String name, String desc, String version, String author, String homepage, String rawScript) async {
-    _ctx = IsolateQjs();
-    JSInvokable setToGlobalObject = await _ctx.evaluate("(key, val) => { this[key] = val; }");
-    await setToGlobalObject.invoke(Console.setConsole());
-    await setToGlobalObject.invoke(Global(key: key).setLxNative());
-    String? preloadScript = await _getPreloadScript();
-    if (preloadScript == null) return false;
-    _ctx.evaluate(preloadScript);
-    _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
-    await _ctx.evaluate(rawScript);
-    return true;
+    try{
+      _ctx = IsolateQjs();
+      JSInvokable setToGlobalObject = await _ctx.evaluate("(key, val) => { this[key] = val; }");
+      await setToGlobalObject.invoke(Console.setConsole());
+      await setToGlobalObject.invoke(Global(key: key).setLxNative());
+      String? preloadScript = await _getPreloadScript();
+      if (preloadScript == null) return false;
+      _ctx.evaluate(preloadScript);
+      _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
+      await _ctx.evaluate(rawScript);
+      return true;
+    }catch(e,s){
+      Log.e(e.toString(), s);
+      return false;
+    }
+
   }
 
   Future<String?> _getPreloadScript() async {
