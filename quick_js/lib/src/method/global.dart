@@ -10,12 +10,16 @@ import 'dart:convert';
 
 import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_qjs/flutter_qjs.dart';
-class Global{
-  static IsolateFunction __lx_native__ = IsolateFunction((params) {
-    Log.d("params:${params}");
+class Global {
+  late String key;
+  Global({required this.key});
+
+  static IsolateFunction __lx_native_call__ = IsolateFunction((String key,String event,String data) {
+    Log.d("params:${key},event:${event},data:${data}");
+    return null;
   });
 
-  static List setLxNative(){
-    return ["__lx_native_call__",__lx_native__];
+  List setLxNative(){
+    return ["__lx_native_call__",__lx_native_call__];
   }
 }

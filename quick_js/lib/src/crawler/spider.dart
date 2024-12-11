@@ -26,14 +26,12 @@ class Spider {
     _ctx = IsolateQjs();
     JSInvokable setToGlobalObject = await _ctx.evaluate("(key, val) => { this[key] = val; }");
     await setToGlobalObject.invoke(Console.setConsole());
-    await setToGlobalObject.invoke(Global.setLxNative());
-    await _ctx.evaluate("globalThis.__lx_native_call__('123')");
-    // await _ctx.evaluate("globalThis.__lx_native_call__ = (args1,args2)=>{console.log(args1)}");
+    await setToGlobalObject.invoke(Global(key: key).setLxNative());
     String? preloadScript = await _getPreloadScript();
     if (preloadScript == null) return false;
     _ctx.evaluate(preloadScript);
     _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
-    _ctx.evaluate(rawScript);
+    await _ctx.evaluate(rawScript);
     return true;
   }
 
