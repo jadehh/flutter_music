@@ -9,13 +9,13 @@
 
 
 import 'dart:math';
-import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/app/constant.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:intl/intl.dart';
+import 'package:quick_js/quick_js.dart';
+
 
 class SourceUtil{
-
   static UserApiInfo loadScript(info){
     // 定义正则表达式规则
     final RegExp noteRegExp = RegExp(r'^\/\*[\S|\s]+?\*\/');
@@ -60,15 +60,8 @@ class SourceUtil{
   static initJS(UserApiInfo userApiInfo) async{
     if (userApiInfo.selected) {
       userApiInfo.initStatus.value = 0;
-      Log.i("${userApiInfo.name},准备开始初始化");
-      Future.delayed(Duration(seconds: 1),(){
-        userApiInfo.initStatus.value = 1;
-        Log.i("${userApiInfo.name},正在初始化中");
-        Future.delayed(Duration(seconds: 5),(){
-          userApiInfo.initStatus.value = 3;
-          Log.i("${userApiInfo.name},初始化成功");
-        });
-      });
+      var spider = Spider();
+      spider.init(userApiInfo.id,userApiInfo.name,userApiInfo.description,userApiInfo.version,userApiInfo.author,userApiInfo.homepage,userApiInfo.script);
     }
   }
   static removeInitJs(UserApiInfo userApiInfo) async{

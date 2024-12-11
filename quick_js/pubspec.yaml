@@ -23,6 +23,9 @@ dependencies:
       url: https://github.com/jadehh/flutter_log.git
       ref: f4f911401d13cee9edbeab1edcf8622c63fd3b93
 
+  uuid: ^4.4.2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -30,3 +33,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/js/
+    - assets/js/lib/
+
+

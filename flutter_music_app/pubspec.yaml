@@ -15,7 +15,6 @@ dependencies:
 
   flutter_music_core:
     path: ../flutter_music_core
-
   url_launcher: ^6.1.0
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.0 # 屏幕自适应

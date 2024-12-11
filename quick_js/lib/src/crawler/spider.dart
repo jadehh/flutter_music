@@ -9,29 +9,45 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_qjs/flutter_qjs.dart';
 import 'package:flutter_log/flutter_log.dart';
+import 'package:quick_js/src/method/console.dart';
+import 'package:quick_js/src/method/global.dart';
+import 'package:uuid/uuid.dart';
 
-class Spider{
-  IsolateQjs? _ctx;
+class Spider {
+  late IsolateQjs _ctx;
+
+  late String key;
 
   Spider() {
-    _ctx = null;
+    key = Uuid().v4();
   }
 
-  Future init(String ext) async {
-    await initEngine();
-    await _ctx!.evaluate("__JS_SPIDER__.init(ext)");
+  Future<bool> createJSEnv(String id, String name, String desc, String version, String author, String homepage, String rawScript) async {
+    _ctx = IsolateQjs();
+    JSInvokable setToGlobalObject = await _ctx.evaluate("(key, val) => { this[key] = val; }");
+    await setToGlobalObject.invoke(Console.setConsole());
+    await setToGlobalObject.invoke(Global.setLxNative());
+    await _ctx.evaluate("globalThis.__lx_native_call__('123')");
+    // await _ctx.evaluate("globalThis.__lx_native_call__ = (args1,args2)=>{console.log(args1)}");
+    String? preloadScript = await _getPreloadScript();
+    if (preloadScript == null) return false;
+    _ctx.evaluate(preloadScript);
+    _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
+    _ctx.evaluate(rawScript);
+    return true;
   }
 
-  Future initEngine() async {
-    await _createObj();
-  }
-
-  _createObj() async {
+  Future<String?> _getPreloadScript() async {
     try {
-      _ctx!.evaluate((await rootBundle.loadString( "packages/quick_js/assets/js/lib/spider.js")), evalFlags: JSEvalFlag.MODULE);
-      Log.i("Java Script 环境初始化完成");
-    } catch (e, stackTrace) {
-      Log.e("Java Script 环境初始化失败:${e.toString()}", stackTrace);
+      return await rootBundle.loadString("packages/quick_js/assets/js/lib/user-api-preload.js");
+    } catch (e, s) {
+      Log.e(e.toString(), s);
+      return null;
     }
+  }
+
+  Future init(String id, String name, String desc, String version, String author, String homepage, String rawScript) async {
+    await createJSEnv(id,name,desc,version,author,homepage,rawScript);
+    // await _ctx!.evaluate("__JS_SPIDER__.init(ext)");
   }
 }

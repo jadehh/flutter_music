@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  quick_js:
+    path: ../quick_js
   get: ^4.6.6  # 框架
   #日志
   logger: ^2.4.0
