@@ -10,9 +10,9 @@
 
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter_music_core/common/log.dart';
+import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/common/prefers.dart';
-import 'package:flutter_music_core/model/setting.dart';
+import 'package:flutter_music_core/models/setting.dart';
 import 'package:path/path.dart' as path;
 
 class Path {

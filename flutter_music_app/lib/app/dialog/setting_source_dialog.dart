@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart' ;
 import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
-import 'package:flutter_music_core/model/user_api_info.dart';
+import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
@@ -51,7 +51,6 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
                     alignment: Alignment.topRight,
                     child: IconButton(
                       onPressed: () {
-
                       },
                       icon: const Icon(Icons.close),
                     )),
@@ -127,7 +126,9 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
 
   //imitate widget
   Widget _dropdownButton() {
-    return Text("123");
+
+    return DropdownButton(items:[DropdownMenuItem(child: TextView(S.of(context).user_api_btn_import_local),onTap: (){},)], onChanged: (value){});
+    //
     // return DropDownButton(
     //   buttonBuilder: (_,callBack)=>(FilledButton(onPressed: (){
     //     callBack!();
@@ -157,24 +158,24 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Text(info.name!),
+              Text(info.name),
               const SizedBox(width: 10,),
-              Text(info.version!,style: TextStyle(
+              Text(info.version,style: TextStyle(
                 color: Colors.grey.withOpacity(0.5),
               ),),
                 const SizedBox(width: 10,),
-                Text(info.author!,style: TextStyle(
+                Text(info.author,style: TextStyle(
                   color: Colors.grey.withOpacity(0.5),
               )),
             ],
             ),
             const SizedBox(height: 5),
-            Text(info.description!,style:TextStyle(
+            Text(info.description,style:TextStyle(
               color: Colors.grey.withOpacity(0.5),
             )),
             const SizedBox(height: 5,),
             Checkbox(value: info.allowShowUpdateAlert, onChanged: (value){
-              info.allowShowUpdateAlert=value;
+              info.allowShowUpdateAlert=value!;
               setState(() {
               });
             })

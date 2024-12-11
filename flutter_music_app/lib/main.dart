@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_music_core/model/setting.dart';
 import 'package:flutter_music_core/utils/device.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_music_core/main.dart';
@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         child: GetMaterialApp(
+          builder: FlutterSmartDialog.init(),
           debugShowCheckedModeBanner: false,
           title: 'Flutter Music',
           locale: settingService.locale.value,

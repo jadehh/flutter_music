@@ -7,17 +7,16 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_music/app/base/views/check_box_view.dart';
 import 'package:flutter_music/app/base/views/divider_view.dart';
 import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/base/views/theme_button_view.dart';
-import 'package:flutter_music/app/dialog/setting_source_dialog.dart';
+import 'package:flutter_music/app/dialog/source_dialog.dart';
 import 'package:flutter_music/app/setting/controller/setting_basic_controller.dart';
 import 'package:flutter_music/app/setting/views/setting_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/app/constant.dart';
 import 'package:flutter_music_core/main.dart';
-import 'package:flutter_music_core/model/user_api_info.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:get/get.dart';
 
@@ -89,9 +88,9 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             return _buildLanView(context, controller);
           } else if (index == 11) {
             return _buildFontView(context, controller);
-          } else if (index == 12){
-            return _buildSourceView(context,controller,items[index-1].title);
-          }else {
+          } else if (index == 12) {
+            return _buildSourceView(context, controller, items[index - 1].title);
+          } else {
             return ListTile(
                 title: TextView(items[index - 1].title),
                 trailing: Obx(() => Switch(
@@ -190,7 +189,9 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           Align(
               alignment: Alignment.center,
               child: Wrap(
-                children: themeItems.map((item)=>ThemeButtonView(themeItem: item)).toList(),
+                children: themeItems
+                    .map((item) => ThemeButtonView(themeItem: item))
+                    .toList(),
               ))
         ]));
   }
@@ -225,94 +226,54 @@ class SettingBasicPage extends GetView<SettingBasicController> {
   }
 
   _buildFontView(BuildContext context, SettingBasicController controller) {
-    return Padding(padding: EdgeInsets.fromLTRB(20, 0, 20, 0),child: Row(
-      children: [
-        Text(S.of(context).setting_basic_font_size_80,style: TextStyle(
-          fontSize: Constant.settingBasicFontSize80,
-        ),),
-        Obx(()=>Expanded(child: SfSlider(
-          min: Constant.settingBasicFontSize80,
-          max: Constant.settingBasicFontSize130,
-          interval: 2,
-          showDividers: true,
-          showTicks: false,
-          showLabels: false,
-          enableTooltip: true,
-          tooltipShape: SfPaddleTooltipShape(),
-          value: controller.fontSize.value,
-          onChanged: (dynamic newValue) async {
-            await controller.setFontSize(newValue);
-          },
-        ))),
-        Text(S.of(context).setting_basic_font_size_130,style: TextStyle(
-          fontSize: Constant.settingBasicFontSize130,
-        ),),
-      ],
-    ),
-    );
-  }
-
-  _buildSourceView(BuildContext context,SettingBasicController controller,String title){
-    return ListTile(title:TextView(title), trailing: Icon(Icons.chevron_right), onTap: (){
-      Get.dialog(
-        AlertDialog(
-          title: Align(alignment:Alignment.center,child:TextView(S.of(context).user_api_title),),
-          content: Container(
-            child:  [].isEmpty ? Center(child: TextView(S.of(context).user_api_empty)):ListView(children:
-            List.generate([].length, (i) {
-              return _sourceWidget([][i]);
-            })),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: Row(
+        children: [
+          Text(
+            S.of(context).setting_basic_font_size_80,
+            style: TextStyle(
+              fontSize: Constant.settingBasicFontSize80,
+            ),
           ),
-          actions: [
-            TextButton(
-              child: const TextView("Close"),
-              onPressed: () => Get.back(),
+          Obx(() => Expanded(
+                  child: SfSlider(
+                min: Constant.settingBasicFontSize80,
+                max: Constant.settingBasicFontSize130,
+                interval: 2,
+                showDividers: true,
+                showTicks: false,
+                showLabels: false,
+                enableTooltip: true,
+                tooltipShape: SfPaddleTooltipShape(),
+                value: controller.fontSize.value,
+                onChanged: (dynamic newValue) async {
+                  await controller.setFontSize(newValue);
+                },
+              ))),
+          Text(
+            S.of(context).setting_basic_font_size_130,
+            style: TextStyle(
+              fontSize: Constant.settingBasicFontSize130,
             ),
-            TextButton(
-              child: const TextView("confirm"),
-              onPressed: () => Get.back(),
-            ),
-          ],
-        ),
-      );
-    },);
-  }
-  Widget _sourceWidget(UserApiInfo info){
-    return Padding(padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),child:
-    Row(
-      children: [
-        Expanded(child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(info.name!),
-                const SizedBox(width: 10,),
-                Text(info.version!,style: TextStyle(
-                  color: Colors.grey.withOpacity(0.5),
-                ),),
-                const SizedBox(width: 10,),
-                Text(info.author!,style: TextStyle(
-                  color: Colors.grey.withOpacity(0.5),
-                )),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(info.description!,style:TextStyle(
-              color: Colors.grey.withOpacity(0.5),
-            )),
-            const SizedBox(height: 5,),
-            Checkbox(value: info.allowShowUpdateAlert, onChanged: (value){
-
-            })
-          ],
-        )),
-        IconButton(icon: const Icon(Icons.close),onPressed: (){
-        },),
-      ],
-    )
+          ),
+        ],
+      ),
     );
   }
 
+
+  // 自定义源管理
+  _buildSourceView(BuildContext context, SettingBasicController controller, String title) {
+    return Obx(()=>ListView.builder(itemBuilder: (context,index){
+      if (index == SourceService.instance.sourceList.length){
+        return ListTile(title: TextView(title),trailing: Icon(Icons.chevron_right),onTap: (){
+          Get.dialog(SourceDialog(title: title, controller: controller));
+        },);
+      }else{
+        return CheckBoxView(index:index,userApiInfo:SourceService.instance.sourceList[index]);
+      }
+    },itemCount: SourceService.instance.sourceList.length + 1,shrinkWrap: true, // 为了嵌套在ListView中，需要设置为true
+      physics: NeverScrollableScrollPhysics()));
+  }
 }

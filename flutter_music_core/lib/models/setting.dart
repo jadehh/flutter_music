@@ -10,9 +10,7 @@ import 'package:flutter_music_core/app/constant.dart';
 import 'package:flutter_music_core/common/prefers.dart';
 
 class Setting {
-  void init() async{
-    await Prefers().init("setting.hive");
-  }
+
   // [
   // SettingItem(title: S.of(context).setting_basic_startup_auto_play, subTitle:S.of(context).setting_basic , index: 0),
   // SettingItem(title: S.of(context).setting_basic_startup_push_play_detail_screen, subTitle:S.of(context).setting_basic , index: 0),

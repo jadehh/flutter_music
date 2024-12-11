@@ -1,7 +1,7 @@
 /*
  * @File     : check_box_view.dart
  * @Author   : jade
- * @Date     : 2024/11/28 10:36
+ * @Date     : 2024/12/10 17:10
  * @Email    : jadehh@1ive.com
  * @Software : Samples
  * @Desc     :
@@ -9,71 +9,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
-import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:flutter_music_core/main.dart';
+import 'package:flutter_music_core/models/db/user_api_info.dart';
+import 'package:flutter_music_core/utils/source.dart';
+import 'package:get/get.dart';
 
-typedef CheckCallBack = void Function(bool value);
-
-class CheckBoxView extends StatefulWidget {
-  final bool value;
-  final String text;
-  final String? tips;
-  final CheckCallBack callback;
-
-  const CheckBoxView(
-      {required this.value,
-      required this.text,
-      required this.callback,
-      this.tips,
-      super.key});
-
-  @override
-  State<StatefulWidget> createState() => _CheckBoxView();
-}
-
-class _CheckBoxView extends State<CheckBoxView> {
-  late CheckCallBack _callback;
-  late bool? _value;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _value = widget.value;
-    _callback = widget.callback;
-  }
+class CheckBoxView extends StatelessWidget {
+  final UserApiInfo userApiInfo;
+  final int index;
+  CheckBoxView({required this.index, required this.userApiInfo, super.key});
 
   @override
   Widget build(BuildContext context) {
+    userApiInfo.selectStatus.value = userApiInfo.selected;
     // TODO: implement build
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          const Padding(padding: EdgeInsets.only(left: 25)),
-          Checkbox(
-              value: _value,
-              onChanged: (bool? value) {
-                _callback(value!);
-                setState(() {
-                  _value = value;
-                });
-              }),
-          const Padding(padding: EdgeInsets.only(left: 5)),
-          Expanded(child: TextView(widget.text)),
-          widget.tips != null
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.add_circle,
-                    size: 12,
-                  ),
-                  onPressed: () async => (await showOkAlertDialog(
-                        context: context,
-                        message: widget.tips,
-                        okLabel: S.of(context).understand,
-                      )))
-              : const SizedBox()
-        ],
-      ),
-    );
+    return Obx(()=>CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        value: userApiInfo.selectStatus.value,
+        onChanged: (value) {
+          userApiInfo.selected = value!;
+          userApiInfo.selectStatus.value = userApiInfo.selected;
+          BoxUtil.editUserApiInfo(index, userApiInfo);
+          if(!userApiInfo.selected){
+            SourceUtil.removeInitJs(userApiInfo);
+          }else{
+            SourceUtil.initJS(userApiInfo);
+          }
+          },
+        title: Row(
+          children: [
+            TextView(userApiInfo.name),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              userApiInfo.version,
+              style: TextStyle(
+                color: Colors.grey.withOpacity(0.7),
+                fontSize: 10,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            userApiInfo.initStatus.value == 0 ? SizedBox.shrink():TextView(
+                "[${userApiInfo.initStatus.value == 1 ?  S.of(context).setting_basic_source_status_initing: userApiInfo.initStatus.value == 2 ? S.of(context).setting_basic_source_status_failed:  S.of(context).setting_basic_source_status_success}]"
+            ),
+          ],
+        )));
   }
+
 }

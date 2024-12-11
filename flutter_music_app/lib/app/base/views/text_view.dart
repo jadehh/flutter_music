@@ -23,8 +23,8 @@ class TextView extends StatelessWidget{
     // TODO: implement build
     return Obx(()=>Container(
         child: ellipsis == true ?
-        Text(data!, maxLines: 1, softWrap: false, overflow: TextOverflow.ellipsis,style: GoogleFonts.roboto( fontSize: settingService.fontSize.value)):
-        Text(data!,style:  GoogleFonts.roboto( fontSize: settingService.fontSize.value,))),
+        Text(data!, maxLines: 1, softWrap: false, overflow: TextOverflow.ellipsis,style: GoogleFonts.roboto( fontSize: settingService.fontSize.value,color: color)):
+        Text(data!,style:  GoogleFonts.roboto( fontSize: settingService.fontSize.value,color: color))),
     );
   }
 }

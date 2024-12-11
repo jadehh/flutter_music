@@ -15,8 +15,9 @@ dependencies:
 
   flutter_music_core:
     path: ../flutter_music_core
+
+  url_launcher: ^6.1.0
   cupertino_icons: ^1.0.8
-  adaptive_dialog: ^2.3.0
   flutter_screenutil: ^5.9.0 # 屏幕自适应
   window_manager: ^0.4.2
   remixicon: ^1.3.0
@@ -25,6 +26,14 @@ dependencies:
   flutter_zoom_drawer: ^3.2.0
   syncfusion_flutter_sliders: ^27.2.5
   google_fonts: ^6.2.1 # 字体
+  flutter_smart_dialog: ^4.9.8+5
+  modal_bottom_sheet: ^3.0.0
+  file_picker: ^8.1.4
+  flutter_log:
+    git:
+      url: https://github.com/jadehh/flutter_log.git
+      ref: f4f911401d13cee9edbeab1edcf8622c63fd3b93
+
 
 
 

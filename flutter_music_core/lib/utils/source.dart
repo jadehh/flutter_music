@@ -1,5 +1,5 @@
 /*
- * @File     : source.dart
+ * @File     : music_source.dart
  * @Author   : jade
  * @Date     : 2024/12/4 9:36
  * @Email    : jadehh@1ive.com
@@ -8,8 +8,10 @@
  */
 
 
+import 'dart:math';
+import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/app/constant.dart';
-import 'package:flutter_music_core/model/user_api_info.dart';
+import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:intl/intl.dart';
 
 class SourceUtil{
@@ -21,7 +23,9 @@ class SourceUtil{
     Map<String,String> scriptInfo = matchInfo(result!);
     scriptInfo["name"] = scriptInfo["name"]!.isNotEmpty ? scriptInfo["name"]! : "user_api_${DateFormat('yyyy/MM/dd HH:mm:ss').format(DateTime.now())}";
     var userApiInfo = UserApiInfo.fromJson(scriptInfo);
+    userApiInfo.id = "`user_api_${Random().nextDouble().toString().substring(2,5)}_${DateTime.now().millisecondsSinceEpoch}";
     userApiInfo.allowShowUpdateAlert = true;
+    userApiInfo.script = info;
     return userApiInfo;
   }
 
@@ -51,4 +55,24 @@ class SourceUtil{
     }
     return infos;
   }
+
+
+  static initJS(UserApiInfo userApiInfo) async{
+    if (userApiInfo.selected) {
+      userApiInfo.initStatus.value = 0;
+      Log.i("${userApiInfo.name},准备开始初始化");
+      Future.delayed(Duration(seconds: 1),(){
+        userApiInfo.initStatus.value = 1;
+        Log.i("${userApiInfo.name},正在初始化中");
+        Future.delayed(Duration(seconds: 5),(){
+          userApiInfo.initStatus.value = 3;
+          Log.i("${userApiInfo.name},初始化成功");
+        });
+      });
+    }
+  }
+  static removeInitJs(UserApiInfo userApiInfo) async{
+    userApiInfo.initStatus.value = 0;
+  }
+
 }

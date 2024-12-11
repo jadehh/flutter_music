@@ -8,22 +8,16 @@
  */
 import 'dart:io';
 
-import 'package:hive/hive.dart';
 
-import 'log.dart';
+import 'package:flutter_log/flutter_log.dart';
+import 'package:flutter_music_core/main.dart';
+
 
 class Prefers {
-  static late Box box;
-
-
-
-  Future init(String boxName) async {
-    box = await Hive.openBox(boxName);
-  }
 
   static String getString(dynamic key, {String defaultValue = ""}) {
     try {
-      String value = box.get(key, defaultValue: defaultValue) as String;
+      String value = BoxUtil.settingBox.get(key, defaultValue: defaultValue) as String;
       // Log.d("Get String Value：$key\r\n$value");
       return value;
     } catch (e) {
@@ -34,7 +28,7 @@ class Prefers {
 
   static int getInt(dynamic key, {int defaultValue = 0}) {
     try {
-      int value = box.get(key, defaultValue: defaultValue) as int;
+      int value = BoxUtil.settingBox.get(key, defaultValue: defaultValue) as int;
       // Log.d("Get int Value：$key\r\n$value");
       return value;
     } catch (e) {
@@ -45,7 +39,7 @@ class Prefers {
 
   static double getFloat(dynamic key, {double defaultValue = 0.0}) {
     try {
-      double value = box.get(key, defaultValue: defaultValue) as double;
+      double value = BoxUtil.settingBox.get(key, defaultValue: defaultValue) as double;
       // Log.d("Get double Value：$key\r\n$value");
       return value;
     } catch (e) {
@@ -56,7 +50,7 @@ class Prefers {
 
   static bool getBoolean(dynamic key, {bool defaultValue = false}) {
     try {
-      bool value = box.get(key, defaultValue: defaultValue) as bool;
+      bool value = BoxUtil.settingBox.get(key, defaultValue: defaultValue) as bool;
       // Log.d("Get bool Value：$key\r\n$value");
       return value;
     } catch (e) {
@@ -67,7 +61,7 @@ class Prefers {
 
   static Directory? getDirectory(dynamic key, {Directory? defaultValue }) {
     try {
-      Directory value = box.get(key, defaultValue: defaultValue) as Directory;
+      Directory value = BoxUtil.settingBox.get(key, defaultValue: defaultValue) as Directory;
       // Log.d("Get bool Value：$key\r\n$value");
       return value;
     } catch (e) {
@@ -78,7 +72,7 @@ class Prefers {
 
   static Future put<T>(dynamic key, T value) async {
     // Log.d("Set LocalStorage：$key\r\n$value");
-    return await box.put(key, value);
+    return await BoxUtil.settingBox.put(key, value);
   }
 
 

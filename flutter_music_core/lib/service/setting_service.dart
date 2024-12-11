@@ -10,8 +10,8 @@
 import 'dart:io';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_music_core/main.dart';
-import 'package:flutter_music_core/model/setting.dart';
+import 'package:flutter_music_core/models/app_theme.dart';
+import 'package:flutter_music_core/models/setting.dart';
 import 'package:get/get.dart';
 
 class SettingService extends GetxService {

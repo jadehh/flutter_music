@@ -8,7 +8,7 @@
  */
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter_music_core/common/log.dart';
+import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/utils/path.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_music_core/impl/call_back.dart';
