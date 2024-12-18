@@ -18,8 +18,8 @@ class BoxUtil{
   static late Box<UserApiInfo> userApiInfoBox;
   static late Box settingBox;
   static init() async{
-    await Hive.deleteBoxFromDisk(userApiInfoBoxName);
-    await Hive.deleteBoxFromDisk(settingBoxName);
+    // await Hive.deleteBoxFromDisk(userApiInfoBoxName);
+    // await Hive.deleteBoxFromDisk(settingBoxName);
     Log.i("Init User Api Info Box");
     userApiInfoBox = await Hive.openBox<UserApiInfo>(userApiInfoBoxName);
     Log.i("Init Setting Box");

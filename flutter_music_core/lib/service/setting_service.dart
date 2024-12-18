@@ -25,6 +25,12 @@ class SettingService extends GetxService {
     return Setting.getFontSize();
   }
 
+  setFontSize(double _fontSize) async {
+    fontSize.value = _fontSize;
+    await Setting.setFontSize(_fontSize);
+  }
+
+
   static Locale get defaultLangLocale {
     switch (Setting.getLanguage()) {
       case 0:
@@ -39,6 +45,17 @@ class SettingService extends GetxService {
   setLocale(int value) async {
     await Setting.setLanguage(value);
     locale.value = defaultLangLocale;
+  }
+
+  final sourceName = defaultSourceName.obs;
+
+  static int get defaultSourceName {
+    return Setting.getSourceName();
+  }
+
+  setSourceName(int _sourceName) async {
+    sourceName.value = _sourceName;
+    await Setting.setSourceName(_sourceName);
   }
 
   Rx<ThemeMode> themeMode = defaultThemeMode.obs;
@@ -93,11 +110,6 @@ class SettingService extends GetxService {
   setThemeScheme(int value)  async{
     await Setting.setThemeScheme(value);
     themeScheme.value = defaultThemeScheme;
-  }
-
-  setFontSize(double _fontSize) async {
-    fontSize.value = _fontSize;
-    await Setting.setFontSize(_fontSize);
   }
 
 }

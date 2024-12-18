@@ -13,7 +13,7 @@ class Global {
   late String key;
   Global({required this.key});
   static IsolateFunction __lx_native_call__ = IsolateFunction((String key,String event,String data) {
-    Log.d("params:${key},event:${event},data:${data}");
+    Log.JSDebug("params:${key},event:${event},data:${data}");
     return null;
   });
 

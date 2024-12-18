@@ -7,7 +7,6 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_music/app/base/views/check_box_view.dart';
 import 'package:flutter_music/app/base/views/divider_view.dart';
 import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/base/views/theme_button_view.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_music/app/setting/views/setting_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/app/constant.dart';
 import 'package:flutter_music_core/main.dart';
+import 'package:flutter_music_core/utils/source.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:get/get.dart';
 
@@ -74,6 +74,10 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           title: S.of(context).user_api_title,
           subTitle: S.of(context).setting_basic_source,
           index: 11),
+      SettingItem(
+          title: S.of(context).setting_basic_sourcename,
+          subTitle: S.of(context).setting_basic_sourcename,
+          index: 12),
     ];
     // TODO: implement build
     return Scaffold(
@@ -90,6 +94,8 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             return _buildFontView(context, controller);
           } else if (index == 12) {
             return _buildSourceView(context, controller, items[index - 1].title);
+          }else if (index == 13) {
+            return _buildSourceNameAliasView(context, controller);
           } else {
             return ListTile(
                 title: TextView(items[index - 1].title),
@@ -271,9 +277,50 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           Get.dialog(SourceDialog(title: title, controller: controller));
         },);
       }else{
-        return CheckBoxView(index:index,userApiInfo:SourceService.instance.sourceList[index]);
+        final userApiInfo = SourceService.instance.sourceList[index];
+        return Obx(()=>ListTile(leading: Checkbox(value: userApiInfo.selectStatus.value, onChanged: (value){
+          userApiInfo.selected = value!;
+          userApiInfo.selectStatus.value = userApiInfo.selected;
+          BoxUtil.editUserApiInfo(index, userApiInfo);
+          if(!userApiInfo.selected){
+            SourceUtil.removeInitJs(userApiInfo);
+          }else{
+            SourceUtil.initJS(userApiInfo);
+          }}),title:TextView(userApiInfo.name),subtitle:  Text(
+          userApiInfo.version,
+          style: TextStyle(
+            color: Colors.grey.withOpacity(0.7),
+            fontSize: 10,
+          ),
+        ),trailing:  userApiInfo.initStatus.value == 0 ? SizedBox.shrink():TextView(
+            "[${userApiInfo.initStatus.value == 1 ?  S.of(context).setting_basic_source_status_initing: userApiInfo.initStatus.value == 2 ? S.of(context).setting_basic_source_status_failed:  S.of(context).setting_basic_source_status_success}]"
+        )));
       }
     },itemCount: SourceService.instance.sourceList.length + 1,shrinkWrap: true, // 为了嵌套在ListView中，需要设置为true
       physics: NeverScrollableScrollPhysics()));
   }
+
+  // 别名设置
+  _buildSourceNameAliasView(BuildContext context,SettingBasicController controller){
+    return Wrap(
+      children: [
+        Obx(() => CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.leading,
+            value: controller.sourceName.value == 0,
+            onChanged: (value) {
+              controller.changeSourceName(0);
+            },
+            title: TextView(S.of(context).setting_basic_sourcename_real))),
+        Obx(() => CheckboxListTile(
+          controlAffinity: ListTileControlAffinity.leading,
+          value: controller.sourceName.value == 1,
+          onChanged: (value) {
+            controller.changeSourceName(1);
+          },
+          title:  TextView(S.of(context).setting_basic_sourcename_alias)),
+        ),
+      ],
+    );
+  }
+
 }

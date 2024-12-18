@@ -14,6 +14,7 @@ class SettingBasicController extends GetxController {
   RxList settingState = [].obs;
   var themeMode = 0.obs;
   var lang = 0.obs;
+  var sourceName = 0.obs;
   final settingService = Get.find<SettingService>();
   var fontSize = 12.0.obs;
   @override
@@ -31,6 +32,7 @@ class SettingBasicController extends GetxController {
     themeMode.value = Setting.getThemeMode();
     lang.value = Setting.getLanguage();
     fontSize.value = Setting.getFontSize();
+    sourceName.value = Setting.getSourceName();
   }
 
   Future<void> changeState({required int index, required bool value}) async {
@@ -75,6 +77,13 @@ class SettingBasicController extends GetxController {
       lang.value = i;
       await settingService.setLocale(i);
       Get.updateLocale(settingService.locale.value);
+    }
+  }
+
+  void changeSourceName(int i) async {
+    if (sourceName.value != i) {
+      sourceName.value = i;
+      await settingService.setSourceName(i);
     }
   }
 

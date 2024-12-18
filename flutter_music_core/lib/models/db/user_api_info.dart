@@ -9,6 +9,7 @@
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:quick_js/quick_js.dart';
 
 part 'user_api_info.g.dart';
 
@@ -62,8 +63,8 @@ class UserApiInfo {
   Rx<bool> selectStatus = false.obs;
 
 
-
-
+  /// 脚本
+  Spider? spider;
 
   factory UserApiInfo.fromJson(Map<String, dynamic> json) {
     return UserApiInfo(

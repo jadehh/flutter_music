@@ -167,6 +167,13 @@ class Setting {
     await Prefers.put("language", value);
   }
 
+  static int getSourceName() {
+    return Prefers.getInt("source_name",defaultValue:0);
+  }
+  static setSourceName(value) async{
+    await Prefers.put("source_name", value);
+  }
+
   static double getFontSize() {
     return Prefers.getFloat("fontSize",defaultValue:Constant.settingBasicFontSize90);
   }

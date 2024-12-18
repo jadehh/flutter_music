@@ -5,21 +5,28 @@ import 'dart:io';
 import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:flutter_music_core/models/setting.dart';
+import 'package:flutter_music_core/service/api_service.dart';
 import 'package:flutter_music_core/service/setting_service.dart';
 import 'package:flutter_music_core/service/source_service.dart';
 import 'package:flutter_music_core/utils/box.dart';
 import 'package:flutter_music_core/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:ok_http/core/cache_manager/http_client_cache_manger.dart';
+import 'package:ok_http/requests/ok_http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'common/prefers.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path/path.dart' as path;
 
-export 'package:flutter_music_core/models/app_theme.dart';
 export 'package:flutter_music_core/service/setting_service.dart';
 export 'package:flutter_music_core/utils/box.dart';
 export 'package:flutter_music_core/service/source_service.dart';
+export 'package:flutter_music_core/event/event.dart';
+export 'package:flutter_music_core/api/index.dart';
+export 'package:flutter_music_core/models/index.dart';
+
+
 class FlutterMusicCore {
   static Future initServices() async {
 
@@ -36,6 +43,11 @@ class FlutterMusicCore {
     await Get.put(Prefers());
 
 
+    //Cache Net 初始化
+
+    HttpClientCacheManger.initialize(OkHttp.instance);
+
+
     //初始化路径
     await initPath();
 
@@ -43,7 +55,7 @@ class FlutterMusicCore {
     // 初始化设置服务
     Get.put(SourceService());
     Get.put(SettingService());
-
+    Get.put(ApiService());
 
   }
 

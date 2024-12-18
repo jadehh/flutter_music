@@ -12,7 +12,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-
+  ok_http:
+    path: ../ok_http
   flutter_music_core:
     path: ../flutter_music_core
   url_launcher: ^6.1.0
@@ -32,6 +33,12 @@ dependencies:
     git:
       url: https://github.com/jadehh/flutter_log.git
       ref: f4f911401d13cee9edbeab1edcf8622c63fd3b93
+  easy_refresh: ^3.4.0
+  flutter_staggered_grid_view: ^0.7.0
+  lottie: ^1.4.3 #lottie动画
+  cached_network_image: ^3.4.1
+  share_plus: ^10.0.2
+
 
 
 
@@ -48,8 +55,10 @@ flutter:
     - assets/
     - assets/images/
     - assets/images/wall/
+    - assets/images/res/
     - assets/fonts/
-
+    - assets/source/
+    - assets/lotties/
 
 flutter_intl:
     enabled: true
