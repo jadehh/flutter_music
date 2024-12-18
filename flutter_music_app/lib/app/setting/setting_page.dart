@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_music/app/base/views/app_scaffold.dart';
 import 'package:flutter_music/app/setting/views/setting_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
 
@@ -15,8 +16,8 @@ class SettingPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(title: Center(child: Text(S.of(context).nav_setting),),),
+    return AppScaffold(
+      appBar: AppBar(title: Center(child: Text(S.of(context).nav_setting))),
       body: SettingView(),
     );
   }

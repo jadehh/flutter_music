@@ -6,6 +6,7 @@
  * @Software : Samples
  * @Desc     :
  */
+
 import 'package:flutter/services.dart';
 import 'package:flutter_qjs/flutter_qjs.dart';
 import 'package:flutter_log/flutter_log.dart';
@@ -14,7 +15,7 @@ import 'package:quick_js/src/method/global.dart';
 import 'package:uuid/uuid.dart';
 
 class Spider {
-  late IsolateQjs _ctx;
+  late IsolateQjs? _ctx;
 
   late String key;
 
@@ -22,16 +23,17 @@ class Spider {
     key = Uuid().v4();
   }
 
-  Future<bool> createJSEnv(String id, String name, String desc, String version, String author, String homepage, String rawScript) async {
+  createJSEnv(String id, String name, String desc, String version, String author, String homepage, String rawScript) async {
     _ctx = IsolateQjs();
-    JSInvokable setToGlobalObject = await _ctx.evaluate("(key, val) => { this[key] = val; }");
+    JSInvokable setToGlobalObject = await _ctx!.evaluate("(key, val) => { this[key] = val; }");
     await setToGlobalObject.invoke(Console.setConsole());
     await setToGlobalObject.invoke(Global(key: key).setLxNative());
+    setToGlobalObject.free();
     String? preloadScript = await _getPreloadScript();
     if (preloadScript == null) return false;
-    _ctx.evaluate(preloadScript);
-    _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
-    await _ctx.evaluate(rawScript);
+    await _ctx!.evaluate(preloadScript);
+    await _ctx!.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}')");
+    await _ctx!.evaluate(rawScript);
     return true;
   }
 
@@ -45,7 +47,12 @@ class Spider {
   }
 
   Future init(String id, String name, String desc, String version, String author, String homepage, String rawScript) async {
-    await createJSEnv(id,name,desc,version,author,homepage,rawScript);
-    // await _ctx!.evaluate("__JS_SPIDER__.init(ext)");
+    return await createJSEnv(id,name,desc,version,author,homepage,rawScript);
   }
+
+  dispose(){
+    _ctx = null;
+    Log.d("Spider Dispose");
+  }
+
 }

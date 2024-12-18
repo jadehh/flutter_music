@@ -10,7 +10,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_music/generated/l10n.dart';
+import 'package:flutter_music_core/main.dart';
+import 'package:flutter_music_core/models/source.dart';
 import 'package:remixicon/remixicon.dart';
+
+
+class SourceMusicItem{
+  final String name;
+  final int index;
+  const SourceMusicItem({required this.name,required this.index});
+}
 
 class NavIconItem {
   late IconData? iconData;
@@ -62,4 +71,25 @@ class Constant{
   ];
 
 
+
+  static List<SourceMusicItem> getSourceMusicItemListByNameList(List nameList){
+    List<SourceMusicItem> sourceMusicItemList = [];
+    for (int index = 0; index < nameList.length;index++ ){
+      sourceMusicItemList.add(SourceMusicItem(name: nameList[index], index: index));
+    }
+    return sourceMusicItemList;
+  }
+
+
+
+  static List<Source> sites({BuildContext? context}){
+    return [
+      Source(context!=null ? S.of(context).source_real_kw:"" ,  context != null ? S.of(context).source_alias_kw:"", key: "source_kw",logo: "assets/source/kw.png",  api: SourceKWApi(), index: 0),
+      Source(context!=null ? S.of(context).source_real_kg:"" ,  context != null ? S.of(context).source_alias_kg:"", key: "source_kg",logo: "assets/source/kg.png",  api: SourceKGApi(), index: 1),
+      Source(context!=null ? S.of(context).source_real_tx:"" ,  context != null ? S.of(context).source_alias_tx:"", key: "source_tx",logo: "assets/source/tx.png",  api: SourceBaseApi(), index: 2),
+      Source(context!=null ? S.of(context).source_real_wy:"" ,  context != null ? S.of(context).source_alias_wy:"", key: "source_wy",logo: "assets/source/wy.png",  api: SourceBaseApi(), index: 3),
+      Source(context!=null ? S.of(context).source_real_mg:"" ,  context != null ? S.of(context).source_alias_mg:"", key: "source_mg",logo: "assets/source/mg.png",  api: SourceBaseApi(), index: 4),
+      Source(context!=null ? S.of(context).source_real_all:"" , context != null ? S.of(context).source_alias_all:"",key: "source_all",logo: "assets/source/all.png",api: SourceBaseApi(), index: 5),
+    ];
+  }
 }

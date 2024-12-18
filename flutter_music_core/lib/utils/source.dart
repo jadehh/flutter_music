@@ -9,7 +9,10 @@
 
 
 import 'dart:math';
+import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/app/constant.dart';
+import 'package:flutter_music_core/event/event.dart';
+import 'package:flutter_music_core/main.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:intl/intl.dart';
 import 'package:quick_js/quick_js.dart';
@@ -60,12 +63,22 @@ class SourceUtil{
   static initJS(UserApiInfo userApiInfo) async{
     if (userApiInfo.selected) {
       userApiInfo.initStatus.value = 0;
-      var spider = Spider();
-      spider.init(userApiInfo.id,userApiInfo.name,userApiInfo.description,userApiInfo.version,userApiInfo.author,userApiInfo.homepage,userApiInfo.script);
+      userApiInfo.spider = Spider();
+      try{
+        await userApiInfo.spider!.init(userApiInfo.id,userApiInfo.name,userApiInfo.description,userApiInfo.version,userApiInfo.author,userApiInfo.homepage,userApiInfo.script);
+        userApiInfo.initStatus.value = 3;
+      }catch(e,s){
+        EventBus.instance.emit(EventBus.sourceDialogEventName, SourceEvent(name: userApiInfo.name, errorMessage: e.toString()));
+        userApiInfo.spider!.dispose();
+        userApiInfo.spider = null;
+        userApiInfo.initStatus.value  = 2;
+        Log.e(e.toString(), s);
+      }
     }
   }
   static removeInitJs(UserApiInfo userApiInfo) async{
+    if( userApiInfo.spider != null){userApiInfo.spider!.dispose();}
+    userApiInfo.spider = null;
     userApiInfo.initStatus.value = 0;
   }
-
 }
