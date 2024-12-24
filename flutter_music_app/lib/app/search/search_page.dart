@@ -27,7 +27,7 @@ class SearchPage extends GetView<SearchPageController>{
           autofocus: true,
           decoration: InputDecoration(
             hintStyle: TextStyle(
-              color: Get.theme.primaryColor.withOpacity(0.7)
+              color: context.theme.primaryColor.withOpacity(0.7)
             ),
             hintText: controller.indexedController.apiService.hotWord.value.isEmpty ? S.of(context).search_hot_search:controller.indexedController.apiService.hotWord.value,
             border: OutlineInputBorder(

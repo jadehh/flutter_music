@@ -29,7 +29,7 @@ class MusicListHeader extends GetView implements PreferredSizeWidget {
           child: ListTile(
             leading: Icon(
               Icons.play_circle_fill,
-              color:Get.theme.primaryColor,
+              color:context.theme.primaryColor,
             ),
             title: Row(
               children: [

@@ -62,8 +62,8 @@ class _Appbar extends StatelessWidget {
     bottom: MusicListHeader(controller.detail,tail: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-      IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.download_circle, color:Get.theme.primaryColor)),
-      IconButton(onPressed: (){}, icon: Icon(Icons.menu_sharp,  color:Get.theme.primaryColor,)),
+      IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.download_circle, color:context.theme.primaryColor)),
+      IconButton(onPressed: (){}, icon: Icon(Icons.menu_sharp,  color:context.theme.primaryColor,)),
     ],),),
     flexibleSpace: PlaylistFlexibleAppBar(album:album,albumDetail: controller.detail),
   );
@@ -90,19 +90,16 @@ class _MusicList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(CupertinoIcons.heart_fill,size: 12,color: Colors.red),
-                  AppStyle.hGap8,
                   QualityTextView(typesDic: controller.detail.value.list[index].typesDic),
                   AppStyle.hGap8,
-                  Text(controller.detail.value.list[index].singer,style: Get.textTheme.bodySmall!.copyWith(color: Colors.grey),),
-                  AppStyle.hGap8,
-                  Expanded(child: Text(controller.detail.value.list[index].albumName,maxLines: 1,overflow: TextOverflow.ellipsis,style: Get.textTheme.bodySmall!.copyWith(color: Colors.grey),)),
+                  Expanded(child: Text(controller.detail.value.list[index].singer + "-" + controller.detail.value.list[index].albumName,maxLines: 1,overflow: TextOverflow.ellipsis,style: context.textTheme.bodySmall!.copyWith(color: Colors.grey),)),
                 ],
               ),trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(controller.detail.value.list[index].interval,style: Get.textTheme.bodySmall!.copyWith(color: Colors.grey),),
+                  Text(controller.detail.value.list[index].interval,style: context.textTheme.bodySmall!.copyWith(color: Colors.grey),),
+                  IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.heart_fill,color: Colors.red)),
                   IconButton(onPressed: (){}, icon: Icon(Icons.more_vert))
                 ],
               ),),

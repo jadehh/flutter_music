@@ -7,6 +7,7 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_music/app/app_style.dart';
 import 'package:flutter_music/app/music_player/views/album_cover.dart';
 import 'package:flutter_music/app/music_player/views/back_ground_view.dart';
 import 'package:flutter_music_core/app/controllers/music_play_service.dart';
@@ -38,12 +39,14 @@ class PlayingTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(onPressed: Get.back, icon: Icon(Icons.arrow_drop_down)),
+        AppStyle.hGap8,
+        IconButton(onPressed: Get.back, icon: Icon(Icons.arrow_drop_down,color: Colors.white)),
         Expanded(child: Center(child: Text(
           "Music Name",
-          style: Get.theme.primaryTextTheme.titleMedium,
+          style: context.theme.primaryTextTheme.titleMedium,
         ))),
-        IconButton(onPressed: Get.back, icon: Icon(Icons.share)),
+        IconButton(onPressed: Get.back, icon: Icon(Icons.share,color: Colors.white)),
+        AppStyle.hGap8
       ],
     );
   }
@@ -69,7 +72,7 @@ class _CenterSection extends State<CenterSection>{
               Key bottomChildKey,
               ) {
             return Stack(
-              clipBehavior: Clip.none,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               children: <Widget>[
                 Center(
                   key: bottomChildKey,

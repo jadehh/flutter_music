@@ -43,12 +43,12 @@ class MusicPlayerView extends GetView<MusicPlayController>{
         children: [
           Text(
               controller.detail.value.name,
-              style:Get.theme.textTheme.bodyMedium
+              style:context.textTheme.bodyMedium
           ),
           AppStyle.hGap4,
           Text("-"),
           AppStyle.hGap4,
-          Expanded(child: Text(controller.detail.value.singer,maxLines: 1,overflow: TextOverflow.ellipsis,style:Get.theme.textTheme.bodyMedium))
+          Expanded(child: Text(controller.detail.value.singer,maxLines: 1,overflow: TextOverflow.ellipsis,style:context.theme.textTheme.bodyMedium))
         ],
       ),
       subtitle:Column(
@@ -59,8 +59,8 @@ class MusicPlayerView extends GetView<MusicPlayController>{
               Obx(()=> ProgressBar(
                 thumbGlowRadius: 0,
                 thumbRadius: 0,
-                progressBarColor: Get.theme.primaryColor.withOpacity(0.3),
-                baseBarColor: Get.theme.primaryColor.withOpacity(0.1),
+                progressBarColor: context.theme.primaryColor.withOpacity(0.3),
+                baseBarColor: context.theme.primaryColor.withOpacity(0.1),
                 barCapShape: BarCapShape.square,
                 barHeight: 20,
                 timeLabelLocation: TimeLabelLocation.none,
@@ -71,7 +71,7 @@ class MusicPlayerView extends GetView<MusicPlayController>{
                   controller.seek(duration);
                 },
               ),),
-              Positioned.fill(child:Align(child: Obx(()=> Text("${controller.seekTime.value} / ${controller.detail.value.interval}",style: Get.textTheme.labelSmall!.copyWith(color: Colors.grey))),alignment: Alignment.centerRight,),right: 5,)
+              Positioned.fill(child:Align(child: Obx(()=> Text("${controller.seekTime.value} / ${controller.detail.value.interval}",style: context.textTheme.labelSmall!.copyWith(color: Colors.grey))),alignment: Alignment.centerRight,),right: 5,)
             ],
           ),
         ],
@@ -79,9 +79,9 @@ class MusicPlayerView extends GetView<MusicPlayController>{
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(onPressed: (){},icon: Icon(Icons.play_arrow,color: Get.theme.primaryColor,)),
+          IconButton(onPressed: (){},icon: Icon(Icons.play_arrow,color: context.theme.primaryColor,)),
           const SizedBox(width: 8),
-          IconButton(onPressed: (){}, icon: Icon(Icons.menu,color: Get.theme.primaryColor,),tooltip: "当前播放列表",),
+          IconButton(onPressed: (){}, icon: Icon(Icons.menu,color: context.theme.primaryColor,),tooltip: "当前播放列表",),
           const SizedBox(width: 8),
         ],
       ),

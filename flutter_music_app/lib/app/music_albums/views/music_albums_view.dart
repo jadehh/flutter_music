@@ -57,7 +57,7 @@ class _MusicAlbumView extends State<MusicAlbumsView> {
             child: PageGridView(
           itemBuilder: (context, index) => MusicAlbumsCarView(sourceApi:widget.sourceBaseApi,musicAlbum: controller.list[index]),
           pageController: controller,
-          crossAxisCount: MediaQuery.of(context).size.width ~/ 160,
+          crossAxisCount: MediaQuery.of(context).size.width ~/ 180,
           showPageLoading: true,
           firstRefresh: controller.list.isEmpty,
         )),

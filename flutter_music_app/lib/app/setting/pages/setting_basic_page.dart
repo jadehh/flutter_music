@@ -13,7 +13,6 @@ import 'package:flutter_music/app/dialog/source_dialog.dart';
 import 'package:flutter_music/app/setting/controller/setting_basic_controller.dart';
 import 'package:flutter_music/app/setting/views/setting_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
-import 'package:flutter_music_core/app/constant.dart';
 import 'package:flutter_music_core/main.dart';
 import 'package:flutter_music_core/utils/source.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -229,7 +228,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
       ],
     );
   }
-
+  //字符设置
   _buildFontView(BuildContext context, SettingBasicController controller) {
     return Padding(
       padding: EdgeInsets.fromLTRB(20, 0, 20, 0),

@@ -178,7 +178,7 @@ class _OverlappedActionButtons extends StatelessWidget {
                           Container(
                             width: 1,
                             height: 24,
-                            color: Get.theme.dividerColor,
+                            color: context.theme.dividerColor,
                           ),
                         )
                         .toList(),
@@ -283,7 +283,7 @@ class _PlayListHeaderContent extends StatelessWidget {
                     children: [
                       Text(
                         album.name,
-                        style: Get.theme.textTheme.titleLarge,
+                        style: context.theme.textTheme.titleLarge,
                         maxLines: 2,
                       ),
                       Spacer(),
@@ -297,7 +297,7 @@ class _PlayListHeaderContent extends StatelessWidget {
                             albumDetail.value.info.playNum,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Get.theme.textTheme.titleSmall,
+                            style: context.theme.textTheme.titleSmall,
                           ))),
                         ],
                       ),
@@ -306,7 +306,7 @@ class _PlayListHeaderContent extends StatelessWidget {
                         albumDetail.value.info.author,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Get.theme.textTheme.titleSmall,
+                        style: context.theme.textTheme.titleSmall,
                       )),
                     ],
                   ),
@@ -318,7 +318,7 @@ class _PlayListHeaderContent extends StatelessWidget {
           Row(
             children: [
               AppStyle.hGap16,
-              Expanded(child: Obx(()=>Text(albumDetail.value.info.desc,maxLines: 1,style: Get.textTheme.labelMedium?.copyWith(color: Colors.grey),)),),
+              Expanded(child: Obx(()=>Text(albumDetail.value.info.desc,maxLines: 1,style: context.textTheme.labelMedium?.copyWith(color: Colors.grey),)),),
               IconButton(onPressed: (){}, icon: Icon(Icons.chevron_right,color: Colors.white)),
               AppStyle.hGap16,
             ],
@@ -391,13 +391,13 @@ class _OverlappedButton extends StatelessWidget {
             IconTheme.merge(
               data: IconThemeData(
                 size: 18,
-                color: Get.theme.textTheme.bodySmall!.color,
+                color: context.theme.textTheme.bodySmall!.color,
               ),
               child: icon,
             ),
             const SizedBox(width: 8),
             DefaultTextStyle(
-              style: Get.theme.textTheme.bodySmall!,
+              style: context.theme.textTheme.bodySmall!,
               child: label,
             ),
           ],

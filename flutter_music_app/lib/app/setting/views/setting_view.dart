@@ -29,9 +29,6 @@ class SettingView extends StatelessWidget{
         SettingItem(title: S.of(context).setting_basic,subTitle: S.of(context).nav_setting,pageString: RoutePath.kSettingBasic,index: 0),
         SettingItem(title: S.of(context).setting_player,subTitle: S.of(context).nav_setting,pageString: "/",index: 0),
     ];
-
-
-
     return ListView.separated(
       itemBuilder: (BuildContext context, int index) {
         if (index==0){
