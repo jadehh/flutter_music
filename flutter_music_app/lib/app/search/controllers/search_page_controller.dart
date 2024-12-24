@@ -7,7 +7,6 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music/app/constant.dart';
 import 'package:flutter_music/app/indexed/controllers/indexed_controller.dart';
 import 'package:flutter_music_core/event/event.dart';

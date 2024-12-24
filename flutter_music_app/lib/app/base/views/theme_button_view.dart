@@ -9,9 +9,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music_core/main.dart';
 import 'package:get/get.dart';
+
 class ThemeItem{
   final FlexScheme scheme;
   final String title;
@@ -49,7 +49,7 @@ class ThemeButtonView extends StatelessWidget{
               ),
             ),
           ),),
-          TextView(themeItem.title, color: color,),
+          Text(themeItem.title),
         ],
       ), onTap: () async{
         settingService.setThemeScheme(themeItem.index);

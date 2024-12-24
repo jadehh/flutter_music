@@ -9,7 +9,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music/app/app_style.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/constant.dart';
 import 'package:flutter_music/app/search/controllers/search_page_controller.dart';
 import 'package:flutter_music/generated/l10n.dart';
@@ -67,9 +66,7 @@ class SearchPage extends GetView<SearchPageController>{
                     width: 24,
                   ),visible: controller.indexedController.settingService.sourceName.value == 0,)),
                   AppStyle.hGap8,
-                  Obx(()=>TextView(
-                    controller.indexedController.settingService.sourceName.value == 0 ? e.realName:e.aliasName
-                  )),
+                  Obx(()=>Text(controller.indexedController.settingService.sourceName.value == 0 ? e.realName!:e.aliasName!)),
                 ],
               ),
             ),

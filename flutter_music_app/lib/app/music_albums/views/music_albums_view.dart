@@ -8,7 +8,6 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_music/app/base/views/page_grid_view.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/music_albums/controllers/music_albums_page_controller.dart';
 import 'package:flutter_music/app/music_albums/views/music_album_car_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
@@ -43,21 +42,20 @@ class _MusicAlbumView extends State<MusicAlbumsView> {
                       isScrollable: true,
                       dividerColor: Colors.transparent,
                       controller: controller.tabController,
-                      tabs:widget.sourceBaseApi.sortList.map((item)=>Tab(child: TextView(_getName(context, item)))).toList())),
+                      tabs:widget.sourceBaseApi.sortList.map((item)=>Tab(child: Text(_getName(context, item)))).toList())),
               TextButton(
                   onPressed: () {
                     Get.dialog(Dialog(
-                      child: TextView("显示排行"),
+                      child: Text("显示排行"),
                     ));
                   },
-                  child: TextView(S.of(context).songlist_tag_default))
+                  child: Text(S.of(context).songlist_tag_default))
             ],
           ),
         ),
         Expanded(
             child: PageGridView(
-          itemBuilder: (context, index) =>
-              MusicAlbumsCarView(musicAlbum: controller.list[index]),
+          itemBuilder: (context, index) => MusicAlbumsCarView(sourceApi:widget.sourceBaseApi,musicAlbum: controller.list[index]),
           pageController: controller,
           crossAxisCount: MediaQuery.of(context).size.width ~/ 160,
           showPageLoading: true,

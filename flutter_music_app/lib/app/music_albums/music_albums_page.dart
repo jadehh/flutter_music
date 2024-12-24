@@ -9,7 +9,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_music/app/app_style.dart';
 import 'package:flutter_music/app/base/views/app_scaffold.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/constant.dart';
 import 'package:flutter_music/app/indexed/controllers/indexed_controller.dart';
 import 'package:flutter_music/app/music_albums/controllers/music_albums_page_controller.dart';
@@ -59,7 +58,7 @@ class MusicAlbumsPage extends StatelessWidget{
                                   width: 24,
                                 ),visible: controller.settingService.sourceName.value == 0,)),
                                 AppStyle.hGap8,
-                                Obx(()=>TextView( controller.settingService.sourceName.value == 0 ? e.realName:e.aliasName
+                                Obx(()=>Text( controller.settingService.sourceName.value == 0 ? e.realName!:e.aliasName!
                                 )),
                               ],
                             ),

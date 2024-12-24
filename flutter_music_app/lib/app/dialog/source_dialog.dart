@@ -11,12 +11,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_log/flutter_log.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/setting/controller/setting_basic_controller.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/main.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
-import 'package:flutter_music_core/models/setting.dart';
 import 'package:flutter_music_core/utils/source.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,7 +36,7 @@ class _SourceDialog extends State<SourceDialog> {
     return AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       title: Center(
-        child: TextView(widget.title),
+        child: Text(widget.title),
       ),
       content: Container(
         width: double.maxFinite,
@@ -48,7 +46,7 @@ class _SourceDialog extends State<SourceDialog> {
           children: [
             Obx(()=>Expanded(
                 child:SourceService.instance.sourceList.isEmpty
-                    ? Center(child: TextView(S.of(context).user_api_empty))
+                    ? Center(child: Text(S.of(context).user_api_empty))
                     : ListView(
                     children: List.generate(SourceService.instance.sourceList.length, (i) {
                       return _sourceWidget(context,SourceService.instance.sourceList[i]);
@@ -57,7 +55,7 @@ class _SourceDialog extends State<SourceDialog> {
               padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Row(
                 children: [
-                  TextView(S.of(context).user_api_readme),
+                  Text(S.of(context).user_api_readme),
                   InkWell(
                     onTap: () {
                       _open("https://lxmusic.toside.cn/mobile/custom-source");
@@ -75,7 +73,7 @@ class _SourceDialog extends State<SourceDialog> {
               padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: TextView(S.of(context).user_api_note),
+                child: Text(S.of(context).user_api_note),
               ),
             ),
           ],
@@ -83,23 +81,23 @@ class _SourceDialog extends State<SourceDialog> {
       ),
       actions: [
         TextButton(
-            onPressed: () => Get.back(), child: TextView(S.of(context).cancel)),
+            onPressed: () => Get.back(), child: Text(S.of(context).cancel)),
         PopupMenuButton(
           key: _popupMenu,
           itemBuilder: (context) => [
             PopupMenuItem(
-              child: TextView(S.of(context).user_api_btn_import_local),
+              child: Text(S.of(context).user_api_btn_import_local),
               onTap: () async{
                 await selectFile(context);
               }
             ),
             PopupMenuItem(
-              child: TextView(S.of(context).user_api_btn_import_online),
+              child: Text(S.of(context).user_api_btn_import_online),
               onTap: () {},
             ),
           ],
           child: TextButton(
-            child: TextView(S.of(context).user_api_btn_import),
+            child: Text(S.of(context).user_api_btn_import),
             onPressed: () {
               _popupMenu.currentState?.showButtonMenu(); // <- Here
             },

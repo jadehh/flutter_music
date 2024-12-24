@@ -7,15 +7,16 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music/app/app_style.dart';
 import 'package:flutter_music/app/base/views/net_image.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
+import 'package:flutter_music/app/routes/route_path.dart';
+import 'package:flutter_music_core/api/index.dart';
 import 'package:flutter_music_core/models/music_album.dart';
-
+import 'package:get/get.dart';
 class MusicAlbumsCarView extends StatelessWidget{
   final MusicAlbum musicAlbum;
-  const MusicAlbumsCarView({required this.musicAlbum,super.key});
+  final SourceBaseApi sourceApi;
+  const MusicAlbumsCarView({required this.sourceApi,required this.musicAlbum,super.key});
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -24,11 +25,11 @@ class MusicAlbumsCarView extends StatelessWidget{
         child: Column(
           children: [
             SizedBox(height:140,child: NetImage(musicAlbum.img,borderRadius: 8,)),
-            Expanded(child: TextView(musicAlbum.name)),
+            Expanded(child: Text(musicAlbum.name)),
           ],
         )
     ),),onTap: (){
-      Log.d("跳转到详情界面");
+      Get.toNamed(RoutePath.KMusicAlbumsDetail,arguments:[sourceApi,musicAlbum]);
     },);
   }
 }

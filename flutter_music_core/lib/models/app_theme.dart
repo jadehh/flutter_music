@@ -20,7 +20,6 @@ sealed class AppTheme {
   static const cupertinoOverrideTheme =  CupertinoThemeData(applyThemeToAll: true);
 
 
-
   static  FlexScheme defaultScheme = theme_green;
 
   static get theme_green{
@@ -70,30 +69,49 @@ sealed class AppTheme {
   }
 
 
+  static getTextTheme(double fontSize){
+    final basicFontSize = 14;
+    final meanFontSize = fontSize - basicFontSize;
+    return TextTheme(
+      displayLarge: GoogleFonts.roboto(fontSize: 97 + meanFontSize, fontWeight: FontWeight.w300),
+      displayMedium: GoogleFonts.roboto(fontSize: 61 + meanFontSize, fontWeight: FontWeight.w300),
+      displaySmall: GoogleFonts.roboto(fontSize: 48 + meanFontSize, fontWeight: FontWeight.w400),
+      headlineMedium: GoogleFonts.roboto(fontSize: 34 + meanFontSize, fontWeight: FontWeight.w400),
+      headlineSmall: GoogleFonts.roboto(fontSize: 24 + meanFontSize, fontWeight: FontWeight.w400),
+      titleLarge: GoogleFonts.roboto(fontSize: 18 + meanFontSize, fontWeight: FontWeight.w500,color: Colors.white),
+      titleMedium: GoogleFonts.roboto(fontSize: 16 + meanFontSize, fontWeight: FontWeight.w400,color: Colors.white),
+      titleSmall: GoogleFonts.roboto(fontSize: 14 + meanFontSize, fontWeight: FontWeight.w500,color: Colors.white),
+      bodyLarge: GoogleFonts.roboto(fontSize: 16 + meanFontSize, fontWeight: FontWeight.w400),
+      bodyMedium: GoogleFonts.roboto(fontSize: 14 + meanFontSize, fontWeight: FontWeight.w400),
+      labelLarge: GoogleFonts.roboto(fontSize: 14 + meanFontSize, fontWeight: FontWeight.w500),
+      bodySmall: GoogleFonts.roboto(fontSize: 12 + meanFontSize, fontWeight: FontWeight.w400),
+      labelSmall: GoogleFonts.roboto(fontSize: 10 + meanFontSize, fontWeight: FontWeight.w400),
+    );
+  }
 
-  static ThemeData changeLightTheme(FlexScheme scheme ) {
+
+  static ThemeData changeLightTheme(FlexScheme scheme,double fontSize) {
     return FlexThemeData.light(
       scheme: scheme,
       subThemesData: subThemesData,
       visualDensity: visualDensity,
       cupertinoOverrideTheme: cupertinoOverrideTheme,
+      textTheme: getTextTheme(fontSize)
     );
   }
 
-  static ThemeData changeDarkTheme(FlexScheme scheme) {
+  static ThemeData changeDarkTheme(FlexScheme scheme,double fontSize) {
     final baseTheme =  FlexThemeData.dark(
       scheme: scheme,
       subThemesData: subThemesData,
       visualDensity: visualDensity,
       cupertinoOverrideTheme: cupertinoOverrideTheme,
-    );
-    baseTheme.copyWith(
-      textTheme: GoogleFonts.lobsterTextTheme(baseTheme.textTheme),
+        textTheme: getTextTheme(fontSize)
     );
     return baseTheme;
   }
 
   static Color getThemeColor(FlexScheme scheme){
-    return AppTheme.changeLightTheme(scheme).primaryColor;
+    return scheme.colors(Brightness.light).primary;
   }
 }

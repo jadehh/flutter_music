@@ -7,7 +7,6 @@
  * @Desc     :
  */
 import 'package:flutter_music_core/main.dart';
-import 'package:flutter_music_core/models/setting.dart';
 import 'package:get/get.dart';
 
 class SettingBasicController extends GetxController {

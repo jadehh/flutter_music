@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 class SourceBaseApi{
   String get key => "";
   static ApiService get apiService => Get.find<ApiService>();
-  int get limit_list => 0;
   List get sortList => [];
 
   // 获取列表数据
@@ -24,4 +23,18 @@ class SourceBaseApi{
   Future<HotSearch?> getHotSearch() async{
     return null;
   }
+
+  // 获取歌曲列表内的音乐
+  Future<MusicAlbumDetail> getListDetail(String id, int page,{ retryNum = 0}) async{
+    return MusicAlbumDetailNull;
+  }
+
+  // 获取歌曲图片
+
+  Future<String> getMusicPicUrl(String songId) async{
+    return "";
+  }
+
+   get MusicAlbumDetailNull =>  MusicAlbumDetail(list: [], page: 0, limit: 0, total: 0, source: "", info: AlbumDetailInfo(title: "", pic: "", desc: "", author: "", playNum: "0",shareNum: 0,collectNum: 0,commentNum: 0));
+
 }

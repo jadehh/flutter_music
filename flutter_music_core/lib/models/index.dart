@@ -12,3 +12,5 @@ export 'music_album.dart';
 export 'setting.dart';
 export 'source.dart';
 export 'user_api_source_info.dart';
+export 'music_album_detail.dart';
+export 'music_detail.dart';

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_music/app/constant.dart';
 import 'package:flutter_music/app/indexed/controllers/indexed_controller.dart';
 import 'package:flutter_music/app/music_albums/music_albums_page.dart';
+import 'package:flutter_music/app/music_albums/views/user_profile_page.dart';
 import 'package:flutter_music/app/setting/setting_page.dart';
 import 'package:get/get.dart';
 
 class IndexedPage extends GetView<IndexedController> {
   final List<Widget> pages = [
     MusicAlbumsPage(),
-    Text("2"),
+    UserProfilePage(),
     Text("3"),
     SettingPage(),
   ];

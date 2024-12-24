@@ -7,58 +7,56 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_log/flutter_log.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/constant.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/service/api_service.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
-import 'package:flutter_music_core/main.dart';
+import 'package:flutter_music_core/main.dart' as Core;
 
 class IndexedController extends GetxController with GetSingleTickerProviderStateMixin{
   var navIndex = 0.obs;
   final zoomDrawerController = ZoomDrawerController();
   late TabController tabController;
   ApiService apiService = Get.find<ApiService>();
-  SettingService settingService = Get.find<SettingService>();
-  late List<HotSearch> hotSearchList;
+  Core.SettingService settingService = Get.find<Core.SettingService>();
+  late List<Core.HotSearch> hotSearchList;
   IndexedController(){
     tabController = TabController(length: Constant.sites().length, vsync: this);
     tabController.addListener((){
       if(tabController.index == tabController.animation?.value){
-        EventBus.instance.emit(EventBus.apiHotSearchEventName, tabController.index);
+        Core.EventBus.instance.emit(Core.EventBus.apiHotSearchEventName, tabController.index);
       }
     });
-    hotSearchList = List.generate(Constant.sites().length, (item)=>HotSearch(sourceName: "", list: []));
+    hotSearchList = List.generate(Constant.sites().length, (item)=>Core.HotSearch(sourceName: "", list: []));
   }
   @override
   void onInit() async{
     // TODO: implement onInit
     super.onInit();
-    EventBus.instance.listen(EventBus.sourceDialogEventName,(sourceEvent) async {
+    Core.EventBus.instance.listen(Core.EventBus.sourceDialogEventName,(sourceEvent) async {
         Get.dialog(AlertDialog(
-          content: TextView(S.of(Get.context!).user_api__init_failed_alert(sourceEvent.name)+sourceEvent.errorMessage),
+          content: Text(S.of(Get.context!).user_api__init_failed_alert(sourceEvent.name)+sourceEvent.errorMessage),
           actions: [
             TextButton(onPressed: (){
               Get.back();
-            }, child: TextView(S.of(Get.context!).ok))
+            }, child: Text(S.of(Get.context!).ok))
           ],
         ));
       },
     );
-    EventBus.instance.listen(EventBus.apiDialogEventName,(msg) async {
+    Core.EventBus.instance.listen(Core.EventBus.apiDialogEventName,(msg) async {
       Get.dialog(AlertDialog(
-        content: TextView(S.of(Get.context!).search_hot_search + ":" + msg),
+        content: Text(S.of(Get.context!).search_hot_search + ":" + msg),
         actions: [
           TextButton(onPressed: (){
             Get.back();
-          }, child: TextView(S.of(Get.context!).ok))
+          }, child: Text(S.of(Get.context!).ok))
         ],
       ));
     });
 
-    EventBus.instance.listen(EventBus.apiHotSearchEventName,(index) async {
+    Core.EventBus.instance.listen(Core.EventBus.apiHotSearchEventName,(index) async {
       // 获取热词
       List<String> hotList = [];
       final api = Constant.sites()[index].api;
@@ -75,20 +73,20 @@ class IndexedController extends GetxController with GetSingleTickerProviderState
             hotList.addAll(hotSearchList[i].list);
           }
         }
-        apiService.setHotWords(HotSearch(sourceName: "all", list: hotList));
+        apiService.setHotWords(Core.HotSearch(sourceName: "all", list: hotList));
       }else{
         if (hotSearchList[index].list.isEmpty){
           try{
             hotSearchList[index] = (await api.getHotSearch())!;
           }catch(e){
-            EventBus.instance.emit(EventBus.apiDialogEventName, "获取热搜词失败");
+            Core.EventBus.instance.emit(Core.EventBus.apiDialogEventName, "获取热搜词失败");
           }
         }
         apiService.setHotWords(hotSearchList[index]);
       }
     });
 
-    EventBus.instance.emit(EventBus.apiHotSearchEventName,0);
+    Core.EventBus.instance.emit(Core.EventBus.apiHotSearchEventName,0);
 
   }
 }

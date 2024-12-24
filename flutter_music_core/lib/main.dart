@@ -6,6 +6,7 @@ import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:flutter_music_core/models/setting.dart';
 import 'package:flutter_music_core/service/api_service.dart';
+import 'package:flutter_music_core/app/controllers/music_play_service.dart';
 import 'package:flutter_music_core/service/setting_service.dart';
 import 'package:flutter_music_core/service/source_service.dart';
 import 'package:flutter_music_core/utils/box.dart';
@@ -25,6 +26,8 @@ export 'package:flutter_music_core/service/source_service.dart';
 export 'package:flutter_music_core/event/event.dart';
 export 'package:flutter_music_core/api/index.dart';
 export 'package:flutter_music_core/models/index.dart';
+export 'package:flutter_music_core/extensions/index.dart';
+export 'package:flutter_music_core/app/index.dart';
 
 
 class FlutterMusicCore {
@@ -56,6 +59,7 @@ class FlutterMusicCore {
     Get.put(SourceService());
     Get.put(SettingService());
     Get.put(ApiService());
+    Get.put(MusicPlayController());
 
   }
 

@@ -7,7 +7,6 @@
  * @Desc     :
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/main.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
@@ -38,7 +37,7 @@ class CheckBoxView extends StatelessWidget {
           },
         title: Row(
           children: [
-            TextView(userApiInfo.name),
+            Text(userApiInfo.name),
             SizedBox(
               width: 5,
             ),
@@ -52,8 +51,7 @@ class CheckBoxView extends StatelessWidget {
             SizedBox(
               width: 5,
             ),
-            userApiInfo.initStatus.value == 0 ? SizedBox.shrink():TextView(
-                "[${userApiInfo.initStatus.value == 1 ?  S.of(context).setting_basic_source_status_initing: userApiInfo.initStatus.value == 2 ? S.of(context).setting_basic_source_status_failed:  S.of(context).setting_basic_source_status_success}]"
+            userApiInfo.initStatus.value == 0 ? SizedBox.shrink():Text("[${userApiInfo.initStatus.value == 1 ?  S.of(context).setting_basic_source_status_initing: userApiInfo.initStatus.value == 2 ? S.of(context).setting_basic_source_status_failed:  S.of(context).setting_basic_source_status_success}]"
             ),
           ],
         )));

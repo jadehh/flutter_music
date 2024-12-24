@@ -27,6 +27,7 @@ dependencies:
   json_annotation: ^4.9.0
   flex_color_scheme: ^8.0.2 #主题
   google_fonts: ^6.2.1 #字体
+  equatable: ^2.0.0
 
 
 

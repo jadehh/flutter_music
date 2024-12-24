@@ -64,7 +64,7 @@ class SourceKGApi extends SourceBaseApi {
   Future<List<MusicAlbum>> getList({sortId, tagId, page, tryNum=0}) async{
 
     List<MusicAlbum> list = await getSongList(sortId: sortId, tagId: tagId, page: page);
-    final info = currentTagInfo["info"] == tagId ? currentTagInfo["info"] : await getListInfo(tagId: tagId);
+    // final info = currentTagInfo["info"] == tagId ? currentTagInfo["info"] : await getListInfo(tagId: tagId);
     final recommend = tagId == null && page == 1 && sortId == this.sortList[0]["id"] ? await getSongListRecommend() :null; // 如果是所有类别，则顺便获取推荐列表
     if (recommend != null){
       list.insertAll(0, recommend);

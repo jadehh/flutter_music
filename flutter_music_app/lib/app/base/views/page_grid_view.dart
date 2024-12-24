@@ -69,10 +69,10 @@ class PageGridView extends StatelessWidget {
               onRefresh: () => pageController.refreshData(),
             ),
           ),
-          Offstage(
-            offstage: !(showPageLoading && pageController.pageLoading.value),
-            child: const AppLoadingWidget(),
-          ),
+          // Offstage(
+          //   offstage: !(showPageLoading && pageController.pageLoading.value),
+          //   child: const AppLoadingWidget(),
+          // ),
           Offstage(
             offstage: !pageController.pageError.value,
             child: AppErrorWidget(

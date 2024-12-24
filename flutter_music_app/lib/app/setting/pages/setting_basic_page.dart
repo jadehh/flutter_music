@@ -8,7 +8,6 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_music/app/base/views/divider_view.dart';
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/app/base/views/theme_button_view.dart';
 import 'package:flutter_music/app/dialog/source_dialog.dart';
 import 'package:flutter_music/app/setting/controller/setting_basic_controller.dart';
@@ -98,7 +97,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             return _buildSourceNameAliasView(context, controller);
           } else {
             return ListTile(
-                title: TextView(items[index - 1].title),
+                title: Text(items[index - 1].title),
                 trailing: Obx(() => Switch(
                     value: controller.settingState[index - 1],
                     onChanged: (value) {
@@ -166,7 +165,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
     ];
     return Obx(() => Column(children: [
           RadioListTile<int>(
-            title: TextView(S.of(context).setting_basic_theme_follow_system),
+            title: Text(S.of(context).setting_basic_theme_follow_system),
             value: 0,
             groupValue: controller.themeMode.value,
             onChanged: (int? value) {
@@ -175,7 +174,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           ),
           Divider(),
           RadioListTile<int>(
-            title: TextView(S.of(context).setting_basic_theme_light),
+            title: Text(S.of(context).setting_basic_theme_light),
             value: 1,
             groupValue: controller.themeMode.value,
             onChanged: (int? value) {
@@ -184,7 +183,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
           ),
           Divider(),
           RadioListTile<int>(
-            title: TextView(S.of(context).setting_basic_theme_dark),
+            title: Text(S.of(context).setting_basic_theme_dark),
             value: 2,
             groupValue: controller.themeMode.value,
             onChanged: (int? value) {
@@ -211,21 +210,21 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             onChanged: (value) {
               controller.changeLanguage(0);
             },
-            title: TextView(S.of(context).setting_basic_lang_system))),
+            title: Text(S.of(context).setting_basic_lang_system))),
         Obx(() => CheckboxListTile(
             controlAffinity: ListTileControlAffinity.leading,
             value: controller.lang.value == 1,
             onChanged: (value) {
               controller.changeLanguage(1);
             },
-            title: TextView("简体中文"))),
+            title: Text("简体中文"))),
         Obx(() => CheckboxListTile(
               controlAffinity: ListTileControlAffinity.leading,
               value: controller.lang.value == 2,
               onChanged: (value) {
                 controller.changeLanguage(2);
               },
-              title: TextView("English"),
+              title: Text("English"),
             )),
       ],
     );
@@ -273,7 +272,7 @@ class SettingBasicPage extends GetView<SettingBasicController> {
   _buildSourceView(BuildContext context, SettingBasicController controller, String title) {
     return Obx(()=>ListView.builder(itemBuilder: (context,index){
       if (index == SourceService.instance.sourceList.length){
-        return ListTile(title: TextView(title),trailing: Icon(Icons.chevron_right),onTap: (){
+        return ListTile(title: Text(title),trailing: Icon(Icons.chevron_right),onTap: (){
           Get.dialog(SourceDialog(title: title, controller: controller));
         },);
       }else{
@@ -286,13 +285,13 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             SourceUtil.removeInitJs(userApiInfo);
           }else{
             SourceUtil.initJS(userApiInfo);
-          }}),title:TextView(userApiInfo.name),subtitle:  Text(
+          }}),title:Text(userApiInfo.name),subtitle:  Text(
           userApiInfo.version,
           style: TextStyle(
             color: Colors.grey.withOpacity(0.7),
             fontSize: 10,
           ),
-        ),trailing:  userApiInfo.initStatus.value == 0 ? SizedBox.shrink():TextView(
+        ),trailing:  userApiInfo.initStatus.value == 0 ? SizedBox.shrink():Text(
             "[${userApiInfo.initStatus.value == 1 ?  S.of(context).setting_basic_source_status_initing: userApiInfo.initStatus.value == 2 ? S.of(context).setting_basic_source_status_failed:  S.of(context).setting_basic_source_status_success}]"
         )));
       }
@@ -310,14 +309,14 @@ class SettingBasicPage extends GetView<SettingBasicController> {
             onChanged: (value) {
               controller.changeSourceName(0);
             },
-            title: TextView(S.of(context).setting_basic_sourcename_real))),
+            title: Text(S.of(context).setting_basic_sourcename_real))),
         Obx(() => CheckboxListTile(
           controlAffinity: ListTileControlAffinity.leading,
           value: controller.sourceName.value == 1,
           onChanged: (value) {
             controller.changeSourceName(1);
           },
-          title:  TextView(S.of(context).setting_basic_sourcename_alias)),
+          title:  Text(S.of(context).setting_basic_sourcename_alias)),
         ),
       ],
     );

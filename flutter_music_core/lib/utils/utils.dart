@@ -26,8 +26,7 @@ class Utils {
    }
    return str;
   }
-
-
+  static String numFix(int n) => n < 10 ? ("0${n}") : n.toString();
 
   static int stringToInt(String input) {
     // 正则表达式匹配整数，包括负数和整数
@@ -44,10 +43,25 @@ class Utils {
    * @param {*} num
    */
   static String formatPlayCount(int num) {
-    if (num > 100000000) return ((num / 10000000) / 10).toInt().toString() + '亿';
-    if (num > 10000) return ( (num / 1000) / 10).toInt().toString() + '万';
+    if (num > 100000000) return ((num / 10000000) / 10).toStringAsFixed(1) + '亿';
+    if (num > 10000) return ( (num / 1000) / 10).toStringAsFixed(1) + '万';
     return num.toString();
   }
+  /**
+   * 格式化歌手
+   * @param {*} String
+   */
+  static String formatSinger(String rawData) => rawData.replaceAll(RegExp("/&/g"), '、');
+  /**
+   * 格式化播放时间
+   * @param {*} String
+   */
+  static  formatPlayTime (int time) {
+    final m = int.parse((time / 60).toString().split(".")[0]);
+    final s = int.parse((time % 60).toString().split(".")[0]);
+    return m == 0 && s == 0 ? '00:00' : numFix(m) + ':' + numFix(s);
+  }
+
 
   static String onlineToString(int num) {
     if (num >= 10000) {
@@ -112,5 +126,11 @@ class Utils {
       }
     }
     return {"pic":pic,"headers":headers};
+  }
+
+
+  static bool hasMatch(String str,String exp) {
+    final RegExp regex = RegExp(exp);
+    return regex.hasMatch(str);
   }
 }

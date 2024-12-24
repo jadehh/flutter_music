@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart' ;
-import 'package:flutter_music/app/base/views/text_view.dart';
 import 'package:flutter_music/generated/l10n.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,14 +54,14 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
                       icon: const Icon(Icons.close),
                     )),
               ),
-              TextView(S.of(context).user_api_title),
-              Expanded(child: widget.apiItems.isEmpty ? Center(child: TextView(S.of(context).user_api_empty)):ListView(children:
+              Text(S.of(context).user_api_title),
+              Expanded(child: widget.apiItems.isEmpty ? Center(child: Text(S.of(context).user_api_empty)):ListView(children:
               List.generate(widget.apiItems.length, (i) {
                 return _sourceWidget(widget.apiItems[i]);
               }))),
               Padding(padding: const EdgeInsets.fromLTRB(20,5,20,5),child: Row(
                 children: [
-                  TextView(S.of(context).user_api_readme),
+                  Text(S.of(context).user_api_readme),
                   //     Link(
                   //       // from the url_launcher package
                   //       uri: Uri.parse('https://lxmusic.toside.cn/mobile/custom-source'),
@@ -75,11 +74,11 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
                   //     ),
                 ],
               ),),
-              Padding(padding: const EdgeInsets.fromLTRB(20,5,20,5),child:Align(alignment: Alignment.centerLeft,child: TextView(S.of(context).user_api_note),),),
+              Padding(padding: const EdgeInsets.fromLTRB(20,5,20,5),child:Align(alignment: Alignment.centerLeft,child: Text(S.of(context).user_api_note),),),
               Padding(padding: const EdgeInsets.fromLTRB(50, 5, 50, 5),child:  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: FilledButton(onPressed: ()=>(),child: TextView(S.of(context).cancel))),
+                  Expanded(child: FilledButton(onPressed: ()=>(),child: Text(S.of(context).cancel))),
                   const SizedBox(width: 50,),
                   Expanded(child: _dropdownButton()),
                 ],),),
@@ -127,7 +126,7 @@ class _SettingSourceDialog extends State<SettingSourceDialog>{
   //imitate widget
   Widget _dropdownButton() {
 
-    return DropdownButton(items:[DropdownMenuItem(child: TextView(S.of(context).user_api_btn_import_local),onTap: (){},)], onChanged: (value){});
+    return DropdownButton(items:[DropdownMenuItem(child: Text(S.of(context).user_api_btn_import_local),onTap: (){},)], onChanged: (value){});
     //
     // return DropDownButton(
     //   buttonBuilder: (_,callBack)=>(FilledButton(onPressed: (){
