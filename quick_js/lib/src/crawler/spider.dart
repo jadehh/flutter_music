@@ -31,14 +31,15 @@ class Spider {
       String? preloadScript = await _getPreloadScript();
       if (preloadScript == null) return false;
       _ctx.evaluate(preloadScript);
-      _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
+      await _ctx.evaluate("lx_setup('${key}','${id}','${name}','${desc}','${version}','${author}','${homepage}','')");
+      rawScript =  await rootBundle.loadString("packages/quick_js/assets/js/lib/Huibq_lxmusic.js");
       await _ctx.evaluate(rawScript);
+      final x = await _ctx.evaluate("on('request',('1','2','3'))");
       return true;
     }catch(e,s){
       Log.e(e.toString(), s);
       return false;
     }
-
   }
 
   Future<String?> _getPreloadScript() async {

@@ -6,7 +6,7 @@ import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/models/db/user_api_info.dart';
 import 'package:flutter_music_core/models/setting.dart';
 import 'package:flutter_music_core/service/api_service.dart';
-import 'package:flutter_music_core/app/controllers/music_play_service.dart';
+import 'package:flutter_music_core/app/controllers/music_play_controller.dart';
 import 'package:flutter_music_core/service/setting_service.dart';
 import 'package:flutter_music_core/service/source_service.dart';
 import 'package:flutter_music_core/utils/box.dart';

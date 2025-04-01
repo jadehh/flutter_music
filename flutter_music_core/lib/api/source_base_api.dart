@@ -35,6 +35,11 @@ class SourceBaseApi{
     return "";
   }
 
+
+  Future<String> getLyric(MusicDetail info, {isGetLyric = true}) async{
+    return "";
+  }
+
    get MusicAlbumDetailNull =>  MusicAlbumDetail(list: [], page: 0, limit: 0, total: 0, source: "", info: AlbumDetailInfo(title: "", pic: "", desc: "", author: "", playNum: "0",shareNum: 0,collectNum: 0,commentNum: 0));
 
 }

@@ -40,6 +40,7 @@ dependencies:
   share_plus: ^10.0.2
   fluentui_system_icons: ^1.1.270
   audio_video_progress_bar: ^2.0.3
+  marquee: ^2.3.0  # 跑马灯
 
 
 

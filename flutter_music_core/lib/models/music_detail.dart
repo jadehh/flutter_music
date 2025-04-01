@@ -16,7 +16,7 @@ class MusicDetail{
   final String interval;
   final int duration;
   late  String? img;
-  final String? lrc;
+  late String? lrc;
   final String? otherSource;
   final List<dynamic> types;
   final Map<String,dynamic> typesDic;

@@ -63,6 +63,7 @@ class Utils {
   }
 
 
+
   static String onlineToString(int num) {
     if (num >= 10000) {
       return "${(num / 10000.0).toStringAsFixed(1)}万";

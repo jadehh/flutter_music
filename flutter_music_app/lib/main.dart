@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -127,7 +126,8 @@ class MyApp extends StatelessWidget {
                   //查看DEBUG日志按钮
                   //只在Debug、Profile模式显示
                   Visibility(
-                    visible: !kReleaseMode,
+                    // visible: !kReleaseMode,
+                    visible: false,
                     child: Positioned(
                       right: 12,
                       bottom: 200 + context.mediaQueryViewPadding.bottom,

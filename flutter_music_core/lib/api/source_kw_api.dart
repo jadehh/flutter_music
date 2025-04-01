@@ -7,6 +7,9 @@
  * @Desc     :
  */
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:charset_converter/charset_converter.dart';
 import 'package:flutter_log/flutter_log.dart';
 import 'package:flutter_music_core/main.dart';
 import 'package:flutter_music_core/utils/utils.dart';
@@ -27,6 +30,9 @@ class SourceKWApi extends SourceBaseApi {
   static get hotSearchHeader => {"User-Agent": "Dalvik/2.1.0 (Linux; U; Android 9;)"};
 
   List get sortList => [{"name": '最新', "tid": 'new', "id": 'new'}, {"name": '最热', "tid": 'hot', "id": 'hot'}];
+
+  static get bufKey => utf8.encode('yeelion');
+  static get bufKeyLen => bufKey.length;
 
   static Map<String,String>  regExpInfo = {
   "mInfo": r"level:(\w+),bitrate:(\d+),format:(\w+),size:([\w.]+)",
@@ -153,7 +159,7 @@ class SourceKWApi extends SourceBaseApi {
       rethrow;
     }
   }
-  filterListDetail(List<dynamic> rawData){
+  filterListDetail(List<dynamic> rawData,String otherSource){
     List<MusicDetail> list = [];
     for(var item in rawData){
       final infoArr = item["N_MINFO"].split(';');
@@ -196,6 +202,7 @@ class SourceKWApi extends SourceBaseApi {
           albumName: Utils.decodeName(str:item["album"]),
           albumId: item["albumid"],
           songId: item["id"],
+          otherSource: otherSource,
           source: key,
           duration:int.parse(item["duration"]),
           interval: Utils.formatPlayTime(int.parse(item["duration"])),
@@ -212,8 +219,59 @@ class SourceKWApi extends SourceBaseApi {
     return requestObj.data;
   }
 
-  MusicAlbumDetail _$MusicAlbumDetailFromJson(Map<String,dynamic>detail, Map<String, dynamic> body,int page){
-    return MusicAlbumDetail(list:  this.filterListDetail(body["musiclist"]), page: page, limit: body["rn"], total: body["total"], source:key, info: AlbumDetailInfo(title: body["title"], pic: body["pic"], desc: body["info"], author: body["uname"], playNum: Utils.formatPlayCount(body["playnum"]),shareNum: int.parse(detail["share_num"]),commentNum: int.parse(detail["com_num"]),collectNum: int.parse(detail["ct"])));
+
+  buildParams(id, isGetLyric){
+    var params = "user=12345,web,web,web&requester=localhost&req=1&rid=MUSIC_${id}";
+    if (isGetLyric) params += "&lrcx=1";
+    List<int> bufStr = utf8.encode(params);
+    final bufStrLen = bufStr.length;
+    final output = Uint16List(bufStrLen);
+    var i = 0;
+    while (i<bufStrLen){
+      var j = 0;
+      while (j< bufKeyLen && i<bufStrLen){
+        output[i] = bufKey[j] ^ bufStr[i];
+        i++;
+        j++;
+      }
+    }
+    return base64Encode(output);
   }
+  @override
+  Future<String> getLyric(MusicDetail musicInfo, {isGetLyric = true}) async {
+    // TODO: implement getLyric
+    final requestObj = await OkHttp.instance.getData("http://newlyric.kuwo.cn/newlyric.lrc?${buildParams(musicInfo.songId, isGetLyric)}");
+    return await decodeLyric(requestObj, isGetLyric);
+  }
+
+  MusicAlbumDetail _$MusicAlbumDetailFromJson(Map<String,dynamic>detail, Map<String, dynamic> body,int page){
+    return MusicAlbumDetail(list:  this.filterListDetail(body["musiclist"],detail["title"]), page: page, limit: body["rn"], total: body["total"], source:key, info: AlbumDetailInfo(title: body["title"], pic: body["pic"], desc: body["info"], author: body["uname"], playNum: Utils.formatPlayCount(body["playnum"]),shareNum: int.parse(detail["share_num"]),commentNum: int.parse(detail["com_num"]),collectNum: int.parse(detail["ct"])));
+  }
+
+  static Future<String> decodeLyric(Uint8List buf,isGetLyric) async{
+    int index = 0;
+    while (index < buf.length){
+      if ('\r\n\r\n' == utf8.decode(buf.sublist(index,index+4))){
+        break;
+      }
+      index ++;
+    }
+    final  lrcData = Uint8List.fromList(zlib.decode(buf.sublist(index+4)));
+    if (!isGetLyric) return await CharsetConverter.decode( 'gb18030',lrcData);
+    final bufStr = base64Decode(utf8.decode(lrcData));
+    final bufStrLen = bufStr.length;
+    final output = Uint8List(bufStrLen);
+    int i = 0;
+    while (i < bufStrLen) {
+      int j = 0;
+      while (j < bufKeyLen && i < bufStrLen) {
+        output[i] = bufStr[i] ^ bufKey[j];
+        i++;
+        j++;
+      }
+    }
+    return await CharsetConverter.decode('gb18030',output);
+  }
+
 
 }

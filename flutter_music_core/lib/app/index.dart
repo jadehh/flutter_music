@@ -6,5 +6,5 @@
  * @Software : Samples
  * @Desc     :
  */
-export 'controllers/music_play_service.dart';
+export 'controllers/music_play_controller.dart';
 export 'constant.dart';
